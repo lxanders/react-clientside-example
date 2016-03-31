@@ -5,7 +5,7 @@ const EntityList = ({ entities }) => {
     return (
         <ul>
             {entities.map((entity) =>
-                <li key={entity.id}>
+                <li>
                     <EntityListItem {...entity} />
                 </li>
             )}
@@ -15,7 +15,6 @@ const EntityList = ({ entities }) => {
 
 EntityList.propTypes = {
     entities: React.PropTypes.arrayOf(React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
         name: React.PropTypes.string.isRequired
     }))
 };

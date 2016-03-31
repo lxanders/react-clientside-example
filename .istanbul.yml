@@ -2,7 +2,10 @@ instrumentation:
   root: .
   default-excludes: true
   excludes:
+    - 'app.js'
     - 'build/**'
+    - 'reducers/index.js'
+    - 'server.js'
     - 'webpack.config.js'
   embed-source: false
   complete-copy: false

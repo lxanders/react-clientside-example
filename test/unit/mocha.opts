@@ -2,3 +2,4 @@
 --reporter spec
 --recursive
 --compilers js:babel-register
+--require ./test/unit/setupEnvironment.js
