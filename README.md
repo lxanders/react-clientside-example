@@ -1,3 +1,7 @@
+[![Build Status](https://img.shields.io/travis/lxanders/react-clientside-example/master.svg?style=flat)](https://travis-ci.org/lxanders/react-clientside-example)
+
+-----
+
 # react-clientside-example
 
 This is an example for client side rendered React, Redux and hot reloading.
