@@ -4,8 +4,8 @@ import EntityListItem from './EntityListItem';
 const EntityList = ({ entities }) => {
     return (
         <ul>
-            {entities.map((entity) =>
-                <li>
+            {entities.map((entity, index) =>
+                <li key={index}>
                     <EntityListItem {...entity} />
                 </li>
             )}
