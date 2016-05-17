@@ -1,29 +1,42 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button, Form, FormControl } from 'react-bootstrap';
 import { addEntity } from '../actions/index';
 
 export class AddEntity extends React.Component {
-    render() {
-        let input;
+    constructor(...args) {
+        super(...args);
 
+        this.state = {
+            inputValue: ''
+        };
+    }
+
+    updateValue(event) {
+        this.setState({ inputValue: event.target.value });
+    }
+
+    render() {
         const addEntityWithName = (event) => {
             event.preventDefault();
 
-            if (input.value.trim()) {
-                this.props.dispatch(addEntity(input.value));
-                input.value = '';
+            const { inputValue } = this.state;
+
+            if (inputValue.trim()) {
+                this.props.dispatch(addEntity(inputValue));
+                this.setState({ inputValue: '' });
             }
         };
 
-        const saveInputRef = (node) => {
-            input = node;
-        };
-
         return (
-            <form onSubmit={addEntityWithName}>
-                <input ref={saveInputRef} />
-                <button type='submit'>Add entity</button>
-            </form>
+            <Form inline onSubmit={addEntityWithName}>
+                <FormControl
+                    type='text'
+                    placeholder='Entity name'
+                    value={this.state.inputValue}
+                    onChange={this.updateValue.bind(this)} />
+                <Button bsStyle='primary' type='submit'>Add entity</Button>
+            </Form>
         );
     }
 }
