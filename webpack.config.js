@@ -18,12 +18,9 @@ module.exports = {
     ],
     module: {
         loaders: [
-            {
-                test: /\.js$/,
-                loaders: [ 'babel' ],
-                exclude: /node_modules/,
-                include: __dirname
-            }
+            { test: /\.js$/, loaders: [ 'babel' ], exclude: /node_modules/, include: __dirname },
+            { test: /\.css$/, loader: 'style-loader!css-loader' },
+            { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ]
     }
 }
