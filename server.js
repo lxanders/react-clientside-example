@@ -1,19 +1,21 @@
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import Express from 'express';
-import path from 'path';
-import webpackConfig from './webpack.config';
+require('babel-register');
 
-const app = new Express();
-const port = 3000;
-const compiler = webpack(webpackConfig);
+/* eslint-disable */
+var Express = require('express');
+var path = require('path');
+var app = new Express();
+var port = 3000;
+/* eslint-enable */
 
-app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: webpackConfig.output.publicPath }));
-app.use(webpackHotMiddleware(compiler));
+app.use('/assets', Express.static(path.join(__dirname, 'assets')));
+app.use('/bootstrap', Express.static(path.join(__dirname, 'node_modules', 'bootstrap', 'dist')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/index.html'));
+app.get('/bundle.js', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'bundle.js'));
+});
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(port, (error) => {

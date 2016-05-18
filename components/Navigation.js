@@ -1,8 +1,6 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 
-import githubImage from '../assets/img/GitHub-Mark-32px.png';
-
 const Navigation = () => {
     const githubLink = 'https://github.com/lxanders/react-clientside-example';
 
@@ -12,14 +10,14 @@ const Navigation = () => {
                 <Navbar.Brand>
                     <a href={githubLink}>
                         <img
-                            src={githubImage}
+                            src='assets/img/GitHub-Mark-32px.png'
                             alt='Link to GitHub repository for react-clientside-example project'>
                         </img>
                     </a>
                 </Navbar.Brand>
             </Navbar.Header>
             <Nav>
-                <NavItem eventKey={1} href='/'>Example for client side rendered React</NavItem>
+                <NavItem eventKey={1} href='/'>Example for client side rendered React and Redux</NavItem>
             </Nav>
         </Navbar>
     );

@@ -3,17 +3,14 @@ import Navigation from './Navigation';
 import AddEntity from '../containers/AddEntity';
 import AllEntitiesList from '../containers/AllEntitiesList';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../assets/css/main.css';
-
 class App extends React.Component {
     render() {
         return (
-            <div className='container'>
-                <header className='row'>
+            <div>
+                <header>
                     <Navigation />
                 </header>
-                <section className='row'>
+                <section className='container'>
                     <div className='row'><AddEntity /></div>
                     <div className='row'><AllEntitiesList /></div>
                 </section>
