@@ -18,15 +18,15 @@ describe('AddEntity', function () {
 
     it('should dispatch an action to add an entity on clicking', function () {
         const dispatch = sinon.spy();
-        const addEntity = mount(createComponent(dispatch));
         const entityName = 'foo';
+        const addEntity = mount(createComponent(dispatch));
         const expectedDispatchPayload = {
             name: entityName,
             type: 'ADD_ENTITY'
         };
 
-        addEntity.find('input').get(0).value = entityName;
-        addEntity.simulate('submit', { preventDefault: sinon.stub() });
+        addEntity.find('input').simulate('change', { target: { value: entityName } });
+        addEntity.find('form').simulate('submit', { preventDefault: sinon.stub() });
 
         expect(dispatch).to.have.been.calledOnce;
         expect(dispatch).to.have.been.calledWithExactly(expectedDispatchPayload);
@@ -36,7 +36,7 @@ describe('AddEntity', function () {
         const dispatch = sinon.spy();
         const addEntity = mount(createComponent(dispatch));
 
-        addEntity.simulate('submit', { preventDefault: sinon.stub() });
+        addEntity.find('form').simulate('submit', { preventDefault: sinon.stub() });
 
         expect(dispatch).to.not.have.been.called;
     });
@@ -46,8 +46,8 @@ describe('AddEntity', function () {
         const addEntity = mount(createComponent(dispatch));
         const expectedInputValueAfterSubmitting = '';
 
-        addEntity.find('input').get(0).value = 'any input value';
-        addEntity.simulate('submit', { preventDefault: sinon.stub() });
+        addEntity.find('input').simulate('change', { target: { value: 'foo' } });
+        addEntity.find('form').simulate('submit', { preventDefault: sinon.stub() });
 
         expect(dispatch).to.have.been.calledOnce;
         expect(addEntity.find('input').get(0).value).to.equal(expectedInputValueAfterSubmitting);
