@@ -1,0 +1,11 @@
+$icon-font-path: "assets/fonts/";
+
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.navigation {
+    font-size: 24px;
+
+    img {
+        height: 1em;
+    }
+}
