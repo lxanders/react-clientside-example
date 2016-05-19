@@ -5,7 +5,7 @@
     "main": "index.js",
     "private": true,
     "scripts": {
-        "lint": "eslint .",
+        "lint": "eslint actions assets components containers reducers test app.js server.js --cache",
         "build": "NODE_ENV=production browserify app.js -t babelify | uglifyjs -c > build/bundle.js && npm run build:css",
         "build:css": "node-sass assets/styles/main.scss build/main.css --output-style compressed --precision 8",
         "build:css:watch": "npm run build:css && node-sass -w assets/styles/main.scss build/main.css",
