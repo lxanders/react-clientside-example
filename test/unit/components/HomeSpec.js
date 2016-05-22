@@ -3,20 +3,21 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
+import { Form, FormControl } from 'react-bootstrap';
 import reducers from '../../../reducers/index';
-import App from '../../../components/App';
+import Routes from '../../../components/Routes';
 
-describe('App', function () {
+describe('Home', function () {
     function createComponent(store = createStore(reducers)) {
         return (
             <Provider store={store}>
-                <App />
+                <Routes />
             </Provider>
         );
     }
 
     function submitFormWithInputValue(form, value) {
-        form.find('input').simulate('change', { target: { value } });
+        form.find(FormControl).simulate('change', { target: { value } });
         form.simulate('submit');
     }
 
@@ -24,7 +25,7 @@ describe('App', function () {
         const entity1 = { name: 'first entry' };
         const entity2 = { name: 'second entry' };
         const app = mount(createComponent());
-        const addEntityForm = app.find('form');
+        const addEntityForm = app.find(Form);
 
         submitFormWithInputValue(addEntityForm, entity1.name);
         submitFormWithInputValue(addEntityForm, entity2.name);

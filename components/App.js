@@ -1,7 +1,5 @@
 import React from 'react';
 import Navigation from './Navigation';
-import AddEntity from '../containers/AddEntity';
-import AllEntitiesList from '../containers/AllEntitiesList';
 
 class App extends React.Component {
     render() {
@@ -10,10 +8,7 @@ class App extends React.Component {
                 <header>
                     <Navigation />
                 </header>
-                <section className='container'>
-                    <div className='row'><AddEntity /></div>
-                    <div className='row'><AllEntitiesList /></div>
-                </section>
+                <main className='container'>{this.props.children}</main>
             </div>
         );
     }

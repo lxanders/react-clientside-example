@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import entities from './entities';
 
-const app = combineReducers({
-    entities
+const reducers = combineReducers({
+    entities,
+    routing: routerReducer
 });
 
-export default app;
+export default reducers;

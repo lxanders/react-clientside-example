@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducers from './reducers/index';
-import App from './components/App';
+import Routes from './components/Routes';
 
 const store = createStore(reducers);
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Routes />
     </Provider>,
     rootElement
 );

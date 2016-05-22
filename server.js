@@ -19,7 +19,7 @@ app.get('/main.css', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'main.css'));
 });
 
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
