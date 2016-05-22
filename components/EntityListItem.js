@@ -1,7 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router';
+
+function createEntityDetailsUri(name) {
+    const normalizedName = name.trim().toLowerCase().replace(/\W/g, '');
+
+    return `/entities/${normalizedName}`;
+}
 
 const EntityListItem = ({ name }) => (
-    <span>{name}</span>
+    <Link to={createEntityDetailsUri(name)}>{name}</Link>
 );
 
 EntityListItem.propTypes = {

@@ -4,6 +4,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import App from './App';
 import Home from './Home';
 import About from './About';
+import EntityDetails from './EntityDetails';
 
 const Routes = (props, { store }) => {
     const history = syncHistoryWithStore(browserHistory, store);
@@ -13,6 +14,7 @@ const Routes = (props, { store }) => {
             <Route path='/' component={App}>
                 <IndexRoute component={Home}/>
                 <Route path='about' component={About} />
+                <Route path='entities/:entityId' component={EntityDetails} />
             </Route>
         </Router>
     );
