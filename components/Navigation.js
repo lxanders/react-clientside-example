@@ -12,7 +12,7 @@ const Navigation = () => {
                 <Navbar.Brand>
                     <Link to={githubLink}>
                         <Image
-                            src='assets/img/GitHub-Mark-32px.png'
+                            src='/assets/img/GitHub-Mark-32px.png'
                             alt='Link to GitHub repository for react-clientside-example project' />
                     </Link>
                 </Navbar.Brand>
