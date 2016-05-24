@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { PageHeader } from 'react-bootstrap';
-import EntityDetails from '../../../components/EntityDetails';
+import EntityDetails from '../../../src/components/EntityDetails';
 
 describe('EntityDetails', function () {
     function createComponent(params = { entityId: 'foo' }, location = { query: {} }) {

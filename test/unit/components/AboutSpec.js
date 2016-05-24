@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { PageHeader } from 'react-bootstrap';
-import About from '../../../components/About';
+import About from '../../../src/components/About';
 
 describe('About', function () {
     function createComponent() {

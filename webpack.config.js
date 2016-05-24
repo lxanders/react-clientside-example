@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var config;
 
 config = {
-    entry: './app.js',
+    entry: './src/app.js',
     output: {
         filename: './build/bundle.js'
     },

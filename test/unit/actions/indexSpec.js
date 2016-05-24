@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { addEntity } from '../../../actions/index';
+import { addEntity } from '../../../src/actions/index';
 
 describe('addEntity', function () {
     it('should create an action to add an entity', function () {

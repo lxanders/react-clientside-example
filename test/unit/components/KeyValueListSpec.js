@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import KeyValueList from '../../../components/KeyValueList';
+import KeyValueList from '../../../src/components/KeyValueList';
 
 describe('KeyValueList', function () {
     function createComponent(object) {

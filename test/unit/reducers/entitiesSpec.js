@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { addEntity } from '../../../actions/index';
-import entities from '../../../reducers/entities';
+import { addEntity } from '../../../src/actions/index';
+import entities from '../../../src/reducers/entities';
 
 describe('entities', function () {
     describe('multiple entities', function () {

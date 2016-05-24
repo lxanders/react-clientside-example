@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import R from 'ramda';
-import EntityList from '../../../components/EntityList';
-import EntityListItem from '../../../components/EntityListItem';
+import EntityList from '../../../src/components/EntityList';
+import EntityListItem from '../../../src/components/EntityListItem';
 
 describe('EntityList', function () {
     function createDefaultProps() {
