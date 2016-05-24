@@ -15,6 +15,13 @@ app.get('/bundle.js', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'bundle.js'));
 });
 
+// eslint-disable-next-line no-process-env
+if (process.env.NODE_ENV !== 'production') {
+    app.get('/bundle.js.map', function (req, res) {
+        res.sendFile(path.join(__dirname, '..', 'build', 'bundle.js.map'));
+    });
+}
+
 app.get('/main.css', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'main.css'));
 });
