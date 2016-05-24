@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
 import { Form, FormControl } from 'react-bootstrap';
-import reducers from '../../../reducers/index';
-import Routes from '../../../components/Routes';
+import reducers from '../../../src/reducers/index';
+import Routes from '../../../src/components/Routes';
 
 describe('Home', function () {
     function createComponent(store = createStore(reducers)) {

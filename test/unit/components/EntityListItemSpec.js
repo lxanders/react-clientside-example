@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import R from 'ramda';
 import { Link } from 'react-router';
-import EntityListItem from '../../../components/EntityListItem';
+import EntityListItem from '../../../src/components/EntityListItem';
 
 describe('EntityListItem', function () {
     function createDefaultProps() {

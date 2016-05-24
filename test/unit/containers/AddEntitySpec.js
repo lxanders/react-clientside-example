@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { AddEntity } from '../../../containers/AddEntity';
-import reducers from '../../../reducers/index';
+import { AddEntity } from '../../../src/containers/AddEntity';
+import reducers from '../../../src/reducers/index';
 
 describe('AddEntity', function () {
     function createComponent(dispatch = sinon.spy(), store = createStore(reducers)) {

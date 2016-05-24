@@ -5,18 +5,25 @@ var Express = require('express');
 var path = require('path');
 var app = new Express();
 var port = 3000;
-var bootstrapFontsPath = path.join(__dirname, 'node_modules', 'bootstrap-sass', 'assets', 'fonts', 'bootstrap');
+var bootstrapFontsPath = path.join(__dirname, '..', 'node_modules', 'bootstrap-sass', 'assets', 'fonts', 'bootstrap');
 /* eslint-enable */
 
 app.use('/assets/img', Express.static(path.join(__dirname, 'assets', 'img')));
 app.use('/assets/fonts', Express.static(bootstrapFontsPath));
 
 app.get('/bundle.js', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'bundle.js'));
+    res.sendFile(path.join(__dirname, '..', 'build', 'bundle.js'));
 });
 
+// eslint-disable-next-line no-process-env
+if (process.env.NODE_ENV !== 'production') {
+    app.get('/bundle.js.map', function (req, res) {
+        res.sendFile(path.join(__dirname, '..', 'build', 'bundle.js.map'));
+    });
+}
+
 app.get('/main.css', function (req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'main.css'));
+    res.sendFile(path.join(__dirname, '..', 'build', 'main.css'));
 });
 
 app.get('*', function (req, res) {
