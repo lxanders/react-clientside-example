@@ -9,8 +9,8 @@
         "build:css": "node-sass src/assets/styles/main.scss build/main.css --output-style compressed --precision 8",
         "build:css:watch": "npm run build:css && node-sass -w src/assets/styles/main.scss build/main.css",
         "build:dev": "webpack -d --watch & npm run build:css:watch",
-        "dev": "npm run build:dev & node-dev src/server.js",
-        "start": "npm run build && node src/server.js",
+        "dev": "npm run build:dev & node-dev src/server/index.js",
+        "start": "npm run build && node src/server/index.js",
         "pretest": "npm run lint",
         "test": "npm run test:unit:cover",
         "test:unit": "mocha test/unit --opts test/unit/mocha.opts",
@@ -42,6 +42,8 @@
         "react-addons-test-utils": "15.1.0",
         "sinon": "1.17.4",
         "sinon-chai": "2.8.0",
+        "supertest": "1.2.0",
+        "supertest-as-promised": "3.1.0",
         "webpack": "1.13.1"
     },
     "dependencies": {

@@ -1,12 +1,12 @@
 instrumentation:
-  root: .
+  root: src
   default-excludes: true
   excludes:
     - 'app.js'
     - 'assets/**'
     - 'build/**'
     - 'reducers/index.js'
-    - 'server.js'
+    - 'server/index.js'
     - 'webpack.config.js'
   embed-source: false
   complete-copy: false
