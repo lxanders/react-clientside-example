@@ -1,6 +1,3 @@
-export const addEntity = (name) => {
-    return {
-        type: 'ADD_ENTITY',
-        name
-    };
-};
+import { createAction } from 'redux-actions';
+
+export const addEntity = createAction('ADD_ENTITY');

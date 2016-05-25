@@ -21,8 +21,8 @@ describe('AddEntity', function () {
         const entityName = 'foo';
         const addEntity = mount(createComponent(dispatch));
         const expectedDispatchPayload = {
-            name: entityName,
-            type: 'ADD_ENTITY'
+            type: 'ADD_ENTITY',
+            payload: entityName
         };
 
         addEntity.find('input').simulate('change', { target: { value: entityName } });

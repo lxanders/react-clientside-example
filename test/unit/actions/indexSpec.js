@@ -6,7 +6,7 @@ describe('addEntity', function () {
         const entityName = 'any name';
         const expectedAction = {
             type: 'ADD_ENTITY',
-            name: entityName
+            payload: entityName
         };
 
         expect(addEntity(entityName)).to.deep.equal(expectedAction);

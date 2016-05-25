@@ -1,17 +1,7 @@
-const createEntity = (entity) => {
-    return {
-        name: entity.name
-    };
-};
+import { handleActions } from 'redux-actions';
 
-export default (state = [], action) => {
-    switch (action.type) {
-    case 'ADD_ENTITY':
-        return [
-            ...state,
-            createEntity(action)
-        ];
-    default:
-        return state;
-    }
-};
+export default handleActions({
+    ADD_ENTITY: (state, action) => [
+        ...state, { name: action.payload }
+    ]
+}, []);
