@@ -35,7 +35,7 @@ describe('EntityListItem', function () {
             const link = entityListItem.find(Link);
 
             expect(link.prop('to')).to.equal(expectedUri);
-            expect(link.children().text()).to.equal(name);
+            expect(link.children().text()).to.equal(expected);
         });
     });
 });

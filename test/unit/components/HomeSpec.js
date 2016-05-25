@@ -22,8 +22,8 @@ describe('Home', function () {
     }
 
     it('should render all stored entities', function () {
-        const entity1 = { name: 'first entry' };
-        const entity2 = { name: 'second entry' };
+        const entity1 = { name: 'firstentry' };
+        const entity2 = { name: 'secondentry' };
         const app = mount(createComponent());
         const addEntityForm = app.find(Form);
 
