@@ -6,5 +6,14 @@ export default handleActions({
         const items = R.uniq([ ...state.items, { name: action.payload } ]);
 
         return R.merge(state, { items });
+    },
+    REQUEST_ENTITIES: (state, action) => {
+        const newState = R.merge(state, action.payload);
+
+        if (action.payload.status === 'success') {
+            newState.items = R.uniq(R.concat(state.items, action.payload.items));
+        }
+
+        return newState;
     }
 }, { status: '', items: [] });

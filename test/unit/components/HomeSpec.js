@@ -1,17 +1,25 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
 import { expect } from 'chai';
+import sinon from 'sinon';
 import { Form, FormControl } from 'react-bootstrap';
 import reducers from '../../../src/reducers/index';
-import Routes from '../../../src/components/Routes';
+import Home from '../../../src/components/Home';
 
 describe('Home', function () {
-    function createComponent(store = createStore(reducers)) {
+    function createComponent() {
+        const fetcherModule = sinon.stub().resolves({ status: 200, json: sinon.stub().returns([]) });
+        const store = createStore(
+            reducers,
+            applyMiddleware(thunk.withExtraArgument(fetcherModule))
+        );
+
         return (
             <Provider store={store}>
-                <Routes />
+                <Home />
             </Provider>
         );
     }
@@ -24,21 +32,21 @@ describe('Home', function () {
     it('should render all stored entities', function () {
         const entity1 = { name: 'firstentry' };
         const entity2 = { name: 'secondentry' };
-        const app = mount(createComponent());
-        const addEntityForm = app.find(Form);
+        const home = mount(createComponent());
+        const addEntityForm = home.find(Form);
 
         submitFormWithInputValue(addEntityForm, entity1.name);
         submitFormWithInputValue(addEntityForm, entity2.name);
 
-        const entityListItems = app.find('.entity-list').find('li');
+        const entityListItems = home.find('.entity-list').find('li');
 
         expect(entityListItems.at(0).text()).equals(entity1.name);
         expect(entityListItems.at(1).text()).equals(entity2.name);
     });
 
     it('should render no items if no entity was stored', function () {
-        const app = shallow(createComponent());
-        const entityListItems = app.find('.entity-list').find('li');
+        const home = shallow(createComponent());
+        const entityListItems = home.find('.entity-list').find('li');
 
         expect(entityListItems.length).to.equal(0);
     });
