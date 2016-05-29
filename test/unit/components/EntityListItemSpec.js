@@ -28,7 +28,7 @@ describe('EntityListItem', function () {
     ];
 
     testCases.forEach((testCase) => {
-        it('should remove non-word characters and lower-case the result', function () {
+        it(`should remove non-word characters and lower-case the result for ${testCase.name}`, function () {
             const { name, expected } = testCase;
             const expectedUri = `/entities/${expected}`;
             const entityListItem = shallow(createComponent({ name }));
