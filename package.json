@@ -9,8 +9,8 @@
         "build:css": "node-sass src/assets/styles/main.scss build/main.css --output-style compressed --precision 8",
         "build:css:watch": "npm run build:css && node-sass -w src/assets/styles/main.scss build/main.css",
         "build:dev": "webpack -d --watch & npm run build:css:watch",
-        "dev": "npm run build:dev & node-dev src/server.js",
-        "start": "npm run build && node src/server.js",
+        "dev": "npm run build:dev & node-dev src/server/index.js",
+        "start": "npm run build && node src/server/index.js",
         "pretest": "npm run lint",
         "test": "npm run test:unit:cover",
         "test:unit": "mocha test/unit --opts test/unit/mocha.opts",
@@ -27,6 +27,7 @@
         "babel-register": "6.9.0",
         "bootstrap-sass": "3.3.6",
         "chai": "3.5.0",
+        "chai-as-promised": "5.3.0",
         "enzyme": "2.3.0",
         "eslint": "2.10.2",
         "eslint-config-holidaycheck": "0.8.0",
@@ -37,14 +38,19 @@
         "istanbul": "1.0.0-alpha.2",
         "jsdom": "9.2.0",
         "mocha": "2.5.2",
+        "nock": "8.0.0",
         "node-dev": "3.1.1",
         "node-sass": "3.7.0",
         "react-addons-test-utils": "15.1.0",
+        "redux-mock-store": "1.0.3",
         "sinon": "1.17.4",
         "sinon-chai": "2.8.0",
+        "supertest": "1.2.0",
+        "supertest-as-promised": "3.1.0",
         "webpack": "1.13.1"
     },
     "dependencies": {
+        "isomorphic-fetch": "2.2.1",
         "ramda": "0.21.0",
         "react": "15.1.0",
         "react-bootstrap": "0.29.4",
@@ -53,6 +59,8 @@
         "react-router": "2.4.1",
         "react-router-bootstrap": "0.23.0",
         "react-router-redux": "4.0.4",
-        "redux": "3.5.2"
+        "redux": "3.5.2",
+        "redux-actions": "0.9.1",
+        "redux-thunk": "2.1.0"
     }
 }
