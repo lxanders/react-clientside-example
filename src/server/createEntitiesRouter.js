@@ -9,20 +9,20 @@ export default (entities = []) => {
     }
 
     function getEntity(req, res) {
-        const { entityId } = req.params;
+        const { entityName } = req.params;
 
-        if (R.contains(entityId, entities)) {
-            res.status(200).send({ entity: entityId });
+        if (R.contains(entityName, entities)) {
+            res.status(200).send({ entity: entityName });
         } else {
             res.status(404).end();
         }
     }
 
     function putEntity(req, res) {
-        const { entityId } = req.params;
-        const entity = { name: entityId };
+        const { entityName } = req.params;
+        const entity = { name: entityName };
 
-        if (R.contains(entityId, entities)) {
+        if (R.contains(entityName, entities)) {
             res.status(200).send(entity);
         } else {
             entities.push(entity);
@@ -32,8 +32,8 @@ export default (entities = []) => {
     }
 
     entitiesRouter.get('/', getAllEntities);
-    entitiesRouter.get('/:entityId', getEntity);
-    entitiesRouter.put('/:entityId', putEntity);
+    entitiesRouter.get('/:entityName', getEntity);
+    entitiesRouter.put('/:entityName', putEntity);
 
     return entitiesRouter;
 };

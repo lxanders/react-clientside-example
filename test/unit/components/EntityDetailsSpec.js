@@ -5,15 +5,15 @@ import { PageHeader } from 'react-bootstrap';
 import EntityDetails from '../../../src/components/EntityDetails';
 
 describe('EntityDetails', function () {
-    function createComponent(params = { entityId: 'foo' }, location = { query: {} }) {
+    function createComponent(params = { entityName: 'foo' }, location = { query: {} }) {
         return <EntityDetails params={params} location={location} />;
     }
 
-    it('should render the entity id in the page header', function () {
-        const entityId = 'anyid';
-        const entityDetails = shallow(createComponent({ entityId }));
+    it('should render the entity name in the page header', function () {
+        const entityName = 'anyname';
+        const entityDetails = shallow(createComponent({ entityName }));
 
-        expect(entityDetails.find(PageHeader).contains(entityId)).to.equal(true);
+        expect(entityDetails.find(PageHeader).contains(entityName)).to.equal(true);
     });
 
     it('should not render a query parameters header if there were no query parameters', function () {

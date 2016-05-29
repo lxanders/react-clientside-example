@@ -13,16 +13,16 @@ export function storeEntity(entityName) {
     };
 }
 
-function isEntityNew(state, entityId) {
+function isEntityNew(state, entityName) {
     const itemNames = R.map(R.prop('name'), state.entities.items);
 
-    return !R.contains(entityId, itemNames);
+    return !R.contains(entityName, itemNames);
 }
 
-export function storeEntityIfNew(entityId) {
+export function storeEntityIfNew(entityName) {
     return (dispatch, getState) => {
-        if (isEntityNew(getState(), entityId)) {
-            return dispatch(storeEntity(entityId));
+        if (isEntityNew(getState(), entityName)) {
+            return dispatch(storeEntity(entityName));
         }
 
         const warning = 'Entity with that name was already present. Not adding.';

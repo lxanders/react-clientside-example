@@ -22,7 +22,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should fetch an entity for GET /entities/:entityId', function () {
+    it('should fetch an entity for GET /entities/:entityName', function () {
         const entity = 'existing-entity';
         const server = prepareServer([ entity ]);
 
@@ -34,7 +34,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should respond with 404 for GET /entities/:entityId with an non-existing entity', function () {
+    it('should respond with 404 for GET /entities/:entityName with an non-existing entity', function () {
         const server = prepareServer();
 
         return request(server)
@@ -42,7 +42,7 @@ describe('createEntitiesRouter', function () {
             .expect(404);
     });
 
-    it('should add a non-existing entity for PUT /entities/:entityId', function () {
+    it('should add a non-existing entity for PUT /entities/:entityName', function () {
         const entityName = 'prior-non-existing-entity';
         const server = prepareServer();
 
@@ -54,7 +54,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should respond with the entity for PUT /entities/:entityId with an already existing entity', function () {
+    it('should respond with the entity for PUT /entities/:entityName with an already existing entity', function () {
         const entity = 'existing-entity';
         const server = prepareServer([ entity ]);
 
