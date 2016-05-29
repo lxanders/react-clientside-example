@@ -1,31 +1,79 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import nock from 'nock';
 import { expect } from 'chai';
-import { addEntity, fetchEntities } from '../../../src/actions/index';
+import { storeEntityIfNew, fetchEntities } from '../../../src/actions/index';
 
 describe('actions', function () {
-    describe('addEntity', function () {
-        it('should create an action to add an entity', function () {
-            const entityName = 'any name';
-            const expectedAction = {
-                type: 'ADD_ENTITY',
-                payload: entityName
-            };
+    function createStore(services, initialEntityItems = []) {
+        const initialState = {
+            entities: {
+                status: '',
+                items: initialEntityItems
+            }
+        };
 
-            expect(addEntity(entityName)).to.deep.equal(expectedAction);
+        const getState = () => initialState;
+        const mockStore = configureStore([ thunk.withExtraArgument(services) ]);
+
+        return mockStore(getState);
+    }
+
+    describe('storeEntityIfNew', function () {
+        it('should dispatch ADD_ENTITY with an entity when successful', function () {
+            const entity = { name: 'foo' };
+            const services = { storeEntity: () => Promise.resolve(entity) };
+            const store = createStore(services);
+
+            return store.dispatch(storeEntityIfNew(entity.name))
+            .then(() => {
+                const expectedActions = [
+                    { type: 'ADD_ENTITY', payload: { status: 'storing' } },
+                    { type: 'ADD_ENTITY', payload: { status: 'success', entity } }
+                ];
+
+                expect(store.getActions()).to.deep.equal(expectedActions);
+            });
+        });
+
+        it('should dispatch ADD_ENTITY with a warning if the entity already existed locally', function () {
+            const entity = { name: 'foo' };
+            const services = { storeEntity: () => Promise.resolve(entity) };
+            const store = createStore(services, [ entity ]);
+
+            return store.dispatch(storeEntityIfNew(entity.name))
+            .then(() => {
+                const warning = 'Entity with that name was already present. Not adding.';
+                const expectedActions = [
+                    { type: 'ADD_ENTITY', payload: { status: 'warning', warning } }
+                ];
+
+                expect(store.getActions()).to.deep.equal(expectedActions);
+            });
+        });
+
+        it('should dispatch ADD_ENTITY with an error status if there was an error', function () {
+            const entity = { name: 'foo' };
+            const errorMessage = 'any error';
+            const services = { storeEntity: () => Promise.reject(new Error(errorMessage)) };
+            const store = createStore(services);
+
+            return store.dispatch(storeEntityIfNew(entity.name))
+            .then(() => {
+                const expectedActions = [
+                    { type: 'ADD_ENTITY', payload: { status: 'storing' } },
+                    { type: 'ADD_ENTITY', payload: { status: 'error', error: errorMessage } }
+                ];
+
+                expect(store.getActions()).to.deep.equal(expectedActions);
+            });
         });
     });
 
     describe('fetchEntities', function () {
         it('should dispatch REQUEST_ENTITIES with the correct status when successful', function () {
-            const mockStore = configureStore([ thunk ]);
-            const store = mockStore();
             const entitiesInResponse = [ { name: 'entity1' }, { name: 'entity2' } ];
-
-            nock('http://localhost:3000')
-            .get('/api/entities')
-            .reply(200, entitiesInResponse);
+            const services = { fetchEntities: () => Promise.resolve(entitiesInResponse) };
+            const store = createStore(services);
 
             return store.dispatch(fetchEntities())
             .then(() => {
@@ -39,41 +87,18 @@ describe('actions', function () {
         });
 
         it('should dispatch REQUEST_ENTITIES with an error status if there was an error', function () {
-            const mockStore = configureStore([ thunk ]);
-            const store = mockStore();
-            const invalidResponseData = undefined;
-
-            nock('http://localhost:3000')
-            .get('/api/entities')
-            .reply(200, invalidResponseData);
+            const errorMessage = 'any error';
+            const services = { fetchEntities: () => Promise.reject(new Error(errorMessage)) };
+            const store = createStore(services);
 
             return store.dispatch(fetchEntities())
             .then(() => {
-                const errorAction = {
-                    type: 'REQUEST_ENTITIES',
-                    payload: { status: 'error', error: 'Unexpected end of JSON input' }
-                };
+                const expectedActions = [
+                    { type: 'REQUEST_ENTITIES', payload: { status: 'fetching' } },
+                    { type: 'REQUEST_ENTITIES', payload: { status: 'error', error: errorMessage } }
+                ];
 
-                expect(store.getActions()).to.contain(errorAction);
-            });
-        });
-
-        it('should dispatch REQUEST_ENTITIES with an error status if the api replied with status 404', function () {
-            const mockStore = configureStore([ thunk ]);
-            const store = mockStore();
-
-            nock('http://localhost:3000')
-            .get('/api/entities')
-            .reply(404);
-
-            return store.dispatch(fetchEntities())
-            .then(() => {
-                const errorAction = {
-                    type: 'REQUEST_ENTITIES',
-                    payload: { status: 'error', error: '404: Not Found' }
-                };
-
-                expect(store.getActions()).to.contain(errorAction);
+                expect(store.getActions()).to.deep.equal(expectedActions);
             });
         });
     });

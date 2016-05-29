@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import express from 'express';
 import createServer from '../../../src/server/createServer';
 
-describe('entitiesRouter', function () {
+describe('createEntitiesRouter', function () {
     function prepareServer(entities = []) {
         const apiBasePath = '';
 
@@ -43,14 +43,14 @@ describe('entitiesRouter', function () {
     });
 
     it('should add a non-existing entity for PUT /entities/:entityId', function () {
-        const entity = 'prior-non-existing-entity';
+        const entityName = 'prior-non-existing-entity';
         const server = prepareServer();
 
         return request(server)
-            .put(`/entities/${entity}`)
+            .put(`/entities/${entityName}`)
             .expect(201)
             .then((res) => {
-                expect(res.body).to.deep.equal({ entity });
+                expect(res.body).to.deep.equal({ name: entityName });
             });
     });
 

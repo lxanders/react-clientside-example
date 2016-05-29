@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import fetch from 'isomorphic-fetch';
 import reducers from './reducers/index';
 import Routes from './components/Routes';
+import createServices from './services/index';
 
 const store = createStore(
     reducers,
-    applyMiddleware(thunk.withExtraArgument(fetch))
+    applyMiddleware(thunk.withExtraArgument(createServices()))
 );
 
 const rootElement = document.getElementById('root');

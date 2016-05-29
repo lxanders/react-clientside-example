@@ -20,12 +20,14 @@ export default (entities = []) => {
 
     function putEntity(req, res) {
         const { entityId } = req.params;
+        const entity = { name: entityId };
 
         if (R.contains(entityId, entities)) {
-            res.status(200).send();
+            res.status(200).send(entity);
         } else {
-            entities.push(req.params.entityId);
-            res.status(201).send({ entity: entityId });
+            entities.push(entity);
+
+            res.status(201).send(entity);
         }
     }
 
