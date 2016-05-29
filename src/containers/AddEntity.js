@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
-import { addEntity } from '../actions/index';
+import { storeEntityIfNew } from '../actions/index';
 
 export class AddEntity extends React.Component {
     constructor(...args) {
@@ -23,7 +23,7 @@ export class AddEntity extends React.Component {
             const { inputValue } = this.state;
 
             if (inputValue.trim()) {
-                this.props.dispatch(addEntity(inputValue));
+                this.props.dispatch(storeEntityIfNew(inputValue));
                 this.setState({ inputValue: '' });
             }
         };

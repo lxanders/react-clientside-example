@@ -1,7 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -11,10 +10,10 @@ import Routes from '../../../src/components/Routes';
 
 describe('Routes', function () {
     function createComponent() {
-        const fetcherModule = sinon.stub().resolves({ status: 200, json: sinon.stub().returns([]) });
+        const services = { fetchEntities: () => Promise.resolve([]) };
         const store = createStore(
             reducers,
-            applyMiddleware(thunk.withExtraArgument(fetcherModule))
+            applyMiddleware(thunk.withExtraArgument(services))
         );
 
         return (

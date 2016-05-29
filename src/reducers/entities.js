@@ -3,17 +3,25 @@ import R from 'ramda';
 
 export default handleActions({
     ADD_ENTITY: (state, action) => {
-        const items = R.uniq([ ...state.items, { name: action.payload } ]);
+        const { entity, status } = action.payload;
+        const { items } = state;
+        const handlers = {
+            storing: () => R.merge(state, action.payload),
+            success: () => R.merge(state, { status, items: R.append(entity, items) }),
+            warning: () => R.merge(state, action.payload),
+            error: () => R.merge(state, action.payload)
+        };
 
-        return R.merge(state, { items });
+        return handlers[status]();
     },
     REQUEST_ENTITIES: (state, action) => {
-        const newState = R.merge(state, action.payload);
+        const { items, status } = action.payload;
+        const handlers = {
+            fetching: () => R.merge(state, action.payload),
+            success: () => R.merge(state, { status, items: R.uniq(R.concat(state.items, items)) }),
+            error: () => R.merge(state, action.payload)
+        };
 
-        if (action.payload.status === 'success') {
-            newState.items = R.uniq(R.concat(state.items, action.payload.items));
-        }
-
-        return newState;
+        return handlers[status]();
     }
 }, { status: '', items: [] });
