@@ -14,7 +14,8 @@
         "pretest": "npm run lint",
         "test": "npm run test:unit:cover",
         "test:unit": "mocha test/unit --opts test/unit/mocha.opts",
-        "test:unit:cover": "istanbul cover _mocha test/unit -- --opts test/unit/mocha.opts"
+        "test:unit:cover": "istanbul cover _mocha test/unit -- --opts test/unit/mocha.opts",
+        "coveralls": "cat ./build/coverage/lcov.info | coveralls"
     },
     "author": "Alexander Schmidt <alexanderschmidt1@gmail.com>",
     "license": "MIT",
@@ -28,6 +29,7 @@
         "bootstrap-sass": "3.3.6",
         "chai": "3.5.0",
         "chai-as-promised": "5.3.0",
+        "coveralls": "2.11.9",
         "enzyme": "2.3.0",
         "eslint": "2.10.2",
         "eslint-config-holidaycheck": "0.8.0",
