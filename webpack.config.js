@@ -24,7 +24,7 @@ config = {
     plugins: []
 };
 
-if (environment === 'production') {
+if (environment === 'prod') {
     config.plugins.push(new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }));
 } else if (environment === 'dev' ){
     config.plugins.push(new WebpackBuildNotifierPlugin({ sound: false }));
