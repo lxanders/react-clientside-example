@@ -5,6 +5,7 @@ import App from './App';
 import Home from './Home';
 import About from './About';
 import EntityDetails from './EntityDetails';
+import NotFound from './NotFound';
 
 const Routes = (props, { store }) => {
     const history = syncHistoryWithStore(browserHistory, store);
@@ -15,6 +16,7 @@ const Routes = (props, { store }) => {
                 <IndexRoute component={Home}/>
                 <Route path='about' component={About} />
                 <Route path='entities/:entityName' component={EntityDetails} />
+                <Route path='*' component={NotFound} />
             </Route>
         </Router>
     );
