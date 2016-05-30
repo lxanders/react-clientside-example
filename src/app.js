@@ -1,16 +1,31 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import RunMode from 'run-mode';
 import reducers from './reducers/index';
 import Routes from './components/Routes';
 import createServices from './services/index';
 
+const environment = RunMode.get();
+const enhanceStore = () => {
+    const middlewares = applyMiddleware(thunk.withExtraArgument(createServices()));
+
+    if (environment === 'dev') {
+        return compose(
+            middlewares,
+            window.devToolsExtension ? window.devToolsExtension() : (f) => f
+        );
+    }
+
+    return middlewares;
+};
+
 const store = createStore(
     reducers,
-    applyMiddleware(thunk.withExtraArgument(createServices()))
+    enhanceStore()
 );
 
 const rootElement = document.getElementById('root');
