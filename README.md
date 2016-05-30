@@ -1,5 +1,5 @@
 [![Build Status](https://img.shields.io/travis/lxanders/react-clientside-example/master.svg?style=flat)](https://travis-ci.org/lxanders/react-clientside-example)
-[![Coverage Status](https://img.shields.io/coveralls/lxanders/react-clientside-example/master.svg?style=flat)](https://coveralls.io/r/lxanders/react-clientside-example)
+[![Coverage Status](https://img.shields.io/coveralls/lxanders/react-clientside-example/master.svg?style=flat)](https://github.com/lxanders/react-clientside-example)
 
 -----
 
