@@ -1,4 +1,6 @@
 var webpack = require('webpack');
+var RunMode = require('run-mode');
+var environment = RunMode.get();
 var config;
 
 config = {
@@ -21,7 +23,7 @@ config = {
     plugins: []
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (environment === 'production') {
     config.plugins.push(new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }));
 }
 
