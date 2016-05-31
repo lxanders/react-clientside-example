@@ -8,7 +8,6 @@ var createServer = require('./createServer').default;
 var rootPath = path.join(__dirname, '..', '..');
 var bootstrapFontsPath = path.join(rootPath, 'node_modules', 'bootstrap-sass', 'assets', 'fonts', 'bootstrap');
 var port = 3000;
-var environment = RunMode.get();
 var server = express();
 /* eslint-enable */
 
@@ -19,7 +18,7 @@ server.get('/bundle.js', function (req, res) {
     res.sendFile(path.join(rootPath, 'build', 'bundle.js'));
 });
 
-if (environment !== 'production') {
+if (RunMode.isDevelopment()) {
     server.get('/bundle.js.map', function (req, res) {
         res.sendFile(path.join(rootPath, 'build', 'bundle.js.map'));
     });

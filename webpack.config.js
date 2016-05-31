@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 var RunMode = require('run-mode');
-var environment = RunMode.get();
 var config;
 
 config = {
@@ -24,9 +23,9 @@ config = {
     plugins: []
 };
 
-if (environment === 'prod') {
+if (RunMode.isProduction()) {
     config.plugins.push(new webpack.DefinePlugin({ 'process.env': { NODE_ENV: JSON.stringify('production') } }));
-} else if (environment === 'dev' ){
+} else if (RunMode.isDevelopment()){
     config.plugins.push(new WebpackBuildNotifierPlugin({ sound: false }));
 }
 
