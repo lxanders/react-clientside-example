@@ -19,7 +19,7 @@ server.get('/bundle.js', function (req, res) {
     res.sendFile(path.join(rootPath, 'build', 'bundle.js'));
 });
 
-if (environment !== 'production') {
+if (environment === 'development') {
     server.get('/bundle.js.map', function (req, res) {
         res.sendFile(path.join(rootPath, 'build', 'bundle.js.map'));
     });
