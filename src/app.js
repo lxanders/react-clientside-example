@@ -9,11 +9,10 @@ import reducers from './reducers/index';
 import Routes from './components/Routes';
 import createServices from './services/index';
 
-const environment = RunMode.get();
 const enhanceStore = () => {
     const middlewares = applyMiddleware(thunk.withExtraArgument(createServices()));
 
-    if (environment === 'dev') {
+    if (RunMode.isDevelopment()) {
         return compose(
             middlewares,
             window.devToolsExtension ? window.devToolsExtension() : (f) => f
