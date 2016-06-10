@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EntityList from '../components/EntityList';
 import { fetchEntities } from '../actions/index';
+import { getEntityItems, getEntityStatus, getEntityError } from '../reducers/index';
 
 class AllEntitiesList extends React.Component {
     componentDidMount() {
@@ -10,24 +11,22 @@ class AllEntitiesList extends React.Component {
     }
 
     render() {
-        return <EntityList entities={this.props.entities.items} />;
+        return <EntityList entities={this.props.entities} />;
     }
 }
 
 AllEntitiesList.propTypes = {
     fetchEntities: React.PropTypes.func.isRequired,
-    entities: React.PropTypes.shape({
-        status: React.PropTypes.string.isRequired,
-        error: React.PropTypes.string,
-        items: React.PropTypes.arrayOf(React.PropTypes.shape({
-            name: React.PropTypes.string.isRequired
-        }))
-    })
+    entities: React.PropTypes.arrayOf(React.PropTypes.shape({ name: React.PropTypes.string.isRequired })),
+    status: React.PropTypes.string.isRequired,
+    error: React.PropTypes.string
 };
 
-function mapStateToProps(state) {
-    return { entities: state.entities };
-}
+const mapStateToProps = (state) => ({
+    entities: getEntityItems(state),
+    status: getEntityStatus(state),
+    error: getEntityError(state)
+});
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ fetchEntities }, dispatch);
