@@ -3,6 +3,7 @@ instrumentation:
   default-excludes: true
   excludes:
     - 'app.js'
+    - 'configureStore.js'
     - 'assets/**'
     - 'build/**'
     - 'reducers/index.js'

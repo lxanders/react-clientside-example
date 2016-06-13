@@ -26,3 +26,7 @@ export default handleActions({
         return handlers[status]();
     }
 }, { status: '', items: [] });
+
+export const getEntityItems = (state) => state.items;
+export const getEntityStatus = (state) => state.status;
+export const getEntityError = (state) => state.error;
