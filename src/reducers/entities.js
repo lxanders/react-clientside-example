@@ -1,9 +1,9 @@
 import { handleActions } from 'redux-actions';
 import R from 'ramda';
-import { ADD_ENTITY, REQUEST_ENTITIES } from '../actions/types';
+import * as types from '../actions/types';
 
 export default handleActions({
-    [ADD_ENTITY]: (state, action) => {
+    [types.ADD_ENTITY]: (state, action) => {
         const { entity, status } = action.payload;
         const { items } = state;
         const handlers = {
@@ -15,7 +15,7 @@ export default handleActions({
 
         return handlers[status]();
     },
-    [REQUEST_ENTITIES]: (state, action) => {
+    [types.REQUEST_ENTITIES]: (state, action) => {
         const { items, status } = action.payload;
         const handlers = {
             fetching: () => R.merge(state, action.payload),

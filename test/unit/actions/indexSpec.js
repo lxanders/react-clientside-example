@@ -2,7 +2,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
 import { storeEntityIfNew, fetchEntities } from '../../../src/actions/index';
-import { ADD_ENTITY, REQUEST_ENTITIES } from '../../../src/actions/types';
+import * as types from '../../../src/actions/types';
 
 describe('actions', function () {
     function createStore(services, initialEntityItems = []) {
@@ -28,8 +28,8 @@ describe('actions', function () {
             return store.dispatch(storeEntityIfNew(entity.name))
             .then(() => {
                 const expectedActions = [
-                    { type: ADD_ENTITY, payload: { status: 'storing' } },
-                    { type: ADD_ENTITY, payload: { status: 'success', entity } }
+                    { type: types.ADD_ENTITY, payload: { status: 'storing' } },
+                    { type: types.ADD_ENTITY, payload: { status: 'success', entity } }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -45,7 +45,7 @@ describe('actions', function () {
             .then(() => {
                 const warning = 'Entity with that name was already present. Not adding.';
                 const expectedActions = [
-                    { type: ADD_ENTITY, payload: { status: 'warning', warning } }
+                    { type: types.ADD_ENTITY, payload: { status: 'warning', warning } }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -61,8 +61,8 @@ describe('actions', function () {
             return store.dispatch(storeEntityIfNew(entity.name))
             .then(() => {
                 const expectedActions = [
-                    { type: ADD_ENTITY, payload: { status: 'storing' } },
-                    { type: ADD_ENTITY, payload: { status: 'error', error: errorMessage } }
+                    { type: types.ADD_ENTITY, payload: { status: 'storing' } },
+                    { type: types.ADD_ENTITY, payload: { status: 'error', error: errorMessage } }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -79,8 +79,8 @@ describe('actions', function () {
             return store.dispatch(fetchEntities())
             .then(() => {
                 const expectedActions = [
-                    { type: REQUEST_ENTITIES, payload: { status: 'fetching' } },
-                    { type: REQUEST_ENTITIES, payload: { status: 'success', items: entitiesInResponse } }
+                    { type: types.REQUEST_ENTITIES, payload: { status: 'fetching' } },
+                    { type: types.REQUEST_ENTITIES, payload: { status: 'success', items: entitiesInResponse } }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -95,8 +95,8 @@ describe('actions', function () {
             return store.dispatch(fetchEntities())
             .then(() => {
                 const expectedActions = [
-                    { type: REQUEST_ENTITIES, payload: { status: 'fetching' } },
-                    { type: REQUEST_ENTITIES, payload: { status: 'error', error: errorMessage } }
+                    { type: types.REQUEST_ENTITIES, payload: { status: 'fetching' } },
+                    { type: types.REQUEST_ENTITIES, payload: { status: 'error', error: errorMessage } }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
