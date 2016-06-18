@@ -1,8 +1,10 @@
-import { createAction } from 'redux-actions';
 import R from 'ramda';
 import * as types from './types';
 
-export const addEntity = createAction(types.ADD_ENTITY);
+export const addEntity = (payload) => ({
+    type: types.ADD_ENTITY,
+    payload
+});
 
 export function storeEntity(entityName) {
     return (dispatch, getState, services) => {
@@ -34,7 +36,10 @@ export function storeEntityIfNew(entityName) {
     };
 }
 
-export const requestEntities = createAction(types.REQUEST_ENTITIES);
+export const requestEntities = (payload) => ({
+    type: types.REQUEST_ENTITIES,
+    payload
+});
 
 export function fetchEntities() {
     return (dispatch, getState, services) => {
