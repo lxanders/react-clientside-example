@@ -20,7 +20,7 @@ describe('actions', function () {
     }
 
     describe('storeEntityIfNew', function () {
-        it('should dispatch ADD_ENTITY with an entity when successful', function () {
+        it('should dispatch an action containing the added entity if successful', function () {
             const entity = { name: 'foo' };
             const services = { storeEntity: () => Promise.resolve(entity) };
             const store = createStore(services);
@@ -36,7 +36,7 @@ describe('actions', function () {
             });
         });
 
-        it('should dispatch ADD_ENTITY with a warning if the entity already existed locally', function () {
+        it('should dispatch an action containing a warning if the entity already existed locally', function () {
             const entity = { name: 'foo' };
             const services = { storeEntity: () => Promise.resolve(entity) };
             const store = createStore(services, [ entity ]);
@@ -52,7 +52,7 @@ describe('actions', function () {
             });
         });
 
-        it('should dispatch ADD_ENTITY with an error status if there was an error', function () {
+        it('should dispatch an action containing an error message if there was an error', function () {
             const entity = { name: 'foo' };
             const errorMessage = 'any error';
             const services = { storeEntity: () => Promise.reject(new Error(errorMessage)) };
@@ -71,7 +71,7 @@ describe('actions', function () {
     });
 
     describe('fetchEntities', function () {
-        it('should dispatch REQUEST_ENTITIES with the correct status when successful', function () {
+        it('should dispatch an action containing the fetched entities if successful', function () {
             const entitiesInResponse = [ { name: 'entity1' }, { name: 'entity2' } ];
             const services = { fetchEntities: () => Promise.resolve(entitiesInResponse) };
             const store = createStore(services);
@@ -87,7 +87,7 @@ describe('actions', function () {
             });
         });
 
-        it('should dispatch REQUEST_ENTITIES with an error status if there was an error', function () {
+        it('should dispatch an action containing an error message if there was an error', function () {
             const errorMessage = 'any error';
             const services = { fetchEntities: () => Promise.reject(new Error(errorMessage)) };
             const store = createStore(services);
