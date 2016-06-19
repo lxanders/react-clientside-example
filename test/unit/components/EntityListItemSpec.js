@@ -6,17 +6,17 @@ import { Link } from 'react-router';
 import EntityListItem from '../../../src/components/EntityListItem';
 
 describe('EntityListItem', function () {
-    function createDefaultProps() {
+    const createDefaultProps = () => {
         return {
             name: 'any name'
         };
-    }
+    };
 
-    function createComponent(props = {}) {
+    const createComponent = (props = {}) => {
         const mergedProps = R.merge(createDefaultProps(), props);
 
         return <EntityListItem {...mergedProps} />;
-    }
+    };
 
     const testCases = [
         { name: 'a', expected: 'a' },

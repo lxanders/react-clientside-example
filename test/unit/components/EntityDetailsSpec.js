@@ -5,9 +5,9 @@ import { PageHeader } from 'react-bootstrap';
 import EntityDetails from '../../../src/components/EntityDetails';
 
 describe('EntityDetails', function () {
-    function createComponent(params = { entityName: 'foo' }, location = { query: {} }) {
+    const createComponent = (params = { entityName: 'foo' }, location = { query: {} }) => {
         return <EntityDetails params={params} location={location} />;
-    }
+    };
 
     it('should render the entity name in the page header', function () {
         const entityName = 'anyname';

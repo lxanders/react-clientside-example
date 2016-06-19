@@ -10,7 +10,7 @@ import reducers from '../../../src/reducers/index';
 import thunk from 'redux-thunk';
 
 describe('AddEntity', function () {
-    function createComponent(services, dispatch = sinon.spy()) {
+    const createComponent = (services, dispatch = sinon.spy()) => {
         const store = createStore(
             reducers,
             applyMiddleware(thunk.withExtraArgument(services))
@@ -21,7 +21,7 @@ describe('AddEntity', function () {
                 <AddEntity dispatch={dispatch} />
             </Provider>
         );
-    }
+    };
 
     it('should dispatch an action to add an entity on clicking', function () {
         const entityName = 'foo';

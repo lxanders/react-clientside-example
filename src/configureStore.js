@@ -4,7 +4,7 @@ import RunMode from 'run-mode';
 import reducers from './reducers/index';
 import createServices from './services/index';
 
-function enhanceStore() {
+const enhanceStore = () => {
     const middlewares = applyMiddleware(thunk.withExtraArgument(createServices()));
 
     if (RunMode.isDevelopment()) {
@@ -15,13 +15,13 @@ function enhanceStore() {
     }
 
     return middlewares;
-}
+};
 
-function configureStore() {
+const configureStore = () => {
     return createStore(
         reducers,
         enhanceStore()
     );
-}
+};
 
 export default configureStore;

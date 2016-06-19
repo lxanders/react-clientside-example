@@ -1,7 +1,7 @@
 import R from 'ramda';
 import * as types from './types';
 
-function storeEntity(entityName) {
+const storeEntity = (entityName) => {
     return (dispatch, getState, services) => {
         dispatch({ type: types.ADD_ENTITY_REQUEST });
 
@@ -9,15 +9,15 @@ function storeEntity(entityName) {
         .then((entity) => dispatch({ type: types.ADD_ENTITY_SUCCESS, entity }))
         .catch((error) => dispatch({ type: types.ADD_ENTITY_FAILURE, errorMessage: error.message }));
     };
-}
+};
 
-function isEntityNew(state, entityName) {
+const isEntityNew = (state, entityName) => {
     const itemNames = R.map(R.prop('name'), state.entities.items);
 
     return !R.contains(entityName, itemNames);
-}
+};
 
-export function storeEntityIfNew(entityName) {
+export const storeEntityIfNew = (entityName) => {
     return (dispatch, getState) => {
         if (isEntityNew(getState(), entityName)) {
             return dispatch(storeEntity(entityName));
@@ -29,9 +29,9 @@ export function storeEntityIfNew(entityName) {
 
         return Promise.resolve();
     };
-}
+};
 
-export function fetchEntities() {
+export const fetchEntities = () => {
     return (dispatch, getState, services) => {
         dispatch({ type: types.FETCH_ENTITIES_REQUEST });
 
@@ -39,4 +39,4 @@ export function fetchEntities() {
         .then((entities) => dispatch({ type: types.FETCH_ENTITIES_SUCCESS, items: entities }))
         .catch((error) => dispatch({ type: types.FETCH_ENTITIES_FAILURE, errorMessage: error.message }));
     };
-}
+};

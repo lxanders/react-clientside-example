@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-function createEntityDetailsUri(name) {
+const createEntityDetailsUri = (name) => {
     return `/entities/${name}`;
-}
+};
 
-function normalizeEntityName(name) {
+const normalizeEntityName = (name) => {
     return name.trim().toLowerCase().replace(/\W/g, '');
-}
+};
 
 const EntityListItem = ({ name }) => {
     const normalizedName = normalizeEntityName(name);

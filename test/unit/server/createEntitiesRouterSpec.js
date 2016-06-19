@@ -4,11 +4,11 @@ import express from 'express';
 import createServer from '../../../src/server/createServer';
 
 describe('createEntitiesRouter', function () {
-    function prepareServer(entities = []) {
+    const prepareServer = (entities = []) => {
         const apiBasePath = '';
 
         return createServer(express(), apiBasePath, { entities });
-    }
+    };
 
     it('should fetch all entities for GET /entities', function () {
         const entities = [ 'any', 'entities', 'in', 'here' ];

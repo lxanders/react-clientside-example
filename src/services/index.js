@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
 export default function createServices(fetchModule = fetch) {
-    function storeEntity(entityName) {
+    const storeEntity = (entityName) => {
         return fetchModule(`http://localhost:3000/api/entities/${entityName}`, { method: 'put', body: { entityName } })
         .then((response) => {
             if (response.status === 200 || response.status === 201) {
@@ -10,9 +10,9 @@ export default function createServices(fetchModule = fetch) {
 
             throw new Error(`${response.status}: ${response.statusText}`);
         });
-    }
+    };
 
-    function fetchEntities() {
+    const fetchEntities = () => {
         return fetchModule('http://localhost:3000/api/entities', { method: 'get' })
         .then((response) => {
             if (response.status === 200) {
@@ -21,7 +21,7 @@ export default function createServices(fetchModule = fetch) {
 
             throw new Error(`${response.status}: ${response.statusText}`);
         });
-    }
+    };
 
     return {
         storeEntity,

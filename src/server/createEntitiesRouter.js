@@ -4,11 +4,11 @@ import R from 'ramda';
 export default (entities = []) => {
     const entitiesRouter = express.Router(); // eslint-disable-line new-cap
 
-    function getAllEntities(req, res) {
+    const getAllEntities = (req, res) => {
         res.json(entities);
-    }
+    };
 
-    function getEntity(req, res) {
+    const getEntity = (req, res) => {
         const { entityName } = req.params;
 
         if (R.contains(entityName, entities)) {
@@ -16,9 +16,9 @@ export default (entities = []) => {
         } else {
             res.status(404).end();
         }
-    }
+    };
 
-    function putEntity(req, res) {
+    const putEntity = (req, res) => {
         const { entityName } = req.params;
         const entity = { name: entityName };
 
@@ -29,7 +29,7 @@ export default (entities = []) => {
 
             res.status(201).send(entity);
         }
-    }
+    };
 
     entitiesRouter.get('/', getAllEntities);
     entitiesRouter.get('/:entityName', getEntity);

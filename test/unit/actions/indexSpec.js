@@ -5,7 +5,7 @@ import { storeEntityIfNew, fetchEntities } from '../../../src/actions/index';
 import * as types from '../../../src/actions/types';
 
 describe('actions', function () {
-    function createStore(services, initialEntityItems = []) {
+    const createStore = (services, initialEntityItems = []) => {
         const initialState = {
             entities: {
                 status: '',
@@ -17,7 +17,7 @@ describe('actions', function () {
         const mockStore = configureStore([ thunk.withExtraArgument(services) ]);
 
         return mockStore(getState);
-    }
+    };
 
     describe('storeEntityIfNew', function () {
         it('should dispatch an action containing the added entity if successful', function () {

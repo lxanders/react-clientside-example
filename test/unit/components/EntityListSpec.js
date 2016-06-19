@@ -6,7 +6,7 @@ import EntityList from '../../../src/components/EntityList';
 import EntityListItem from '../../../src/components/EntityListItem';
 
 describe('EntityList', function () {
-    function createDefaultProps() {
+    const createDefaultProps = () => {
         return {
             entities: [
                 {
@@ -19,13 +19,13 @@ describe('EntityList', function () {
                 }
             ]
         };
-    }
+    };
 
-    function createComponent(props = {}) {
+    const createComponent = (props = {}) => {
         const mergedProps = R.merge(createDefaultProps(), props);
 
         return <EntityList {...mergedProps} />;
-    }
+    };
 
     it('should render an empty list if the passed entities were empty', function () {
         const entityList = shallow(createComponent({ entities: [] }));

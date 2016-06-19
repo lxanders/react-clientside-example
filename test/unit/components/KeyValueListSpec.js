@@ -4,9 +4,9 @@ import { expect } from 'chai';
 import KeyValueList from '../../../src/components/KeyValueList';
 
 describe('KeyValueList', function () {
-    function createComponent(object) {
+    const createComponent = (object) => {
         return <KeyValueList object={object} />;
-    }
+    };
 
     it('should return a list if the object to list had content', function () {
         const keyValueList = shallow(createComponent({ any: 'thing' }));

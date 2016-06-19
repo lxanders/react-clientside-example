@@ -9,7 +9,7 @@ import App from '../../../src/components/App';
 import Routes from '../../../src/components/Routes';
 
 describe('Routes', function () {
-    function createComponent() {
+    const createComponent = () => {
         const services = { fetchEntities: () => Promise.resolve([]) };
         const store = createStore(
             reducers,
@@ -21,7 +21,7 @@ describe('Routes', function () {
                 <Routes />
             </Provider>
         );
-    }
+    };
 
     it('should render the app component on the default route', function () {
         const routes = mount(createComponent());
