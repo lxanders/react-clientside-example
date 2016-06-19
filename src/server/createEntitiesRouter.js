@@ -1,7 +1,7 @@
 import express from 'express';
 import R from 'ramda';
 
-export default (entities = []) => {
+const createEntitiesRouter = (entities = []) => {
     const entitiesRouter = express.Router(); // eslint-disable-line new-cap
 
     const getAllEntities = (req, res) => {
@@ -37,3 +37,5 @@ export default (entities = []) => {
 
     return entitiesRouter;
 };
+
+export default createEntitiesRouter;

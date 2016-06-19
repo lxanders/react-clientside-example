@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import { storeEntityIfNew } from '../actions/index';
 
-export class AddEntity extends React.Component {
+class AddEntity extends React.Component {
     constructor(...args) {
         super(...args);
 
@@ -45,4 +45,5 @@ AddEntity.propTypes = {
     dispatch: React.PropTypes.func.isRequired
 };
 
+export { AddEntity };
 export default connect()(AddEntity);

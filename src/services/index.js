@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 
-export default function createServices(fetchModule = fetch) {
+const createServices = (fetchModule = fetch) => {
     const storeEntity = (entityName) => {
         return fetchModule(`http://localhost:3000/api/entities/${entityName}`, { method: 'put', body: { entityName } })
         .then((response) => {
@@ -27,4 +27,6 @@ export default function createServices(fetchModule = fetch) {
         storeEntity,
         fetchEntities
     };
-}
+};
+
+export default createServices;

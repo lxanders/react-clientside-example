@@ -17,7 +17,7 @@ const isEntityNew = (state, entityName) => {
     return !R.contains(entityName, itemNames);
 };
 
-export const storeEntityIfNew = (entityName) => {
+const storeEntityIfNew = (entityName) => {
     return (dispatch, getState) => {
         if (isEntityNew(getState(), entityName)) {
             return dispatch(storeEntity(entityName));
@@ -31,7 +31,7 @@ export const storeEntityIfNew = (entityName) => {
     };
 };
 
-export const fetchEntities = () => {
+const fetchEntities = () => {
     return (dispatch, getState, services) => {
         dispatch({ type: types.FETCH_ENTITIES_REQUEST });
 
@@ -39,4 +39,9 @@ export const fetchEntities = () => {
         .then((entities) => dispatch({ type: types.FETCH_ENTITIES_SUCCESS, items: entities }))
         .catch((error) => dispatch({ type: types.FETCH_ENTITIES_FAILURE, errorMessage: error.message }));
     };
+};
+
+export {
+    storeEntityIfNew,
+    fetchEntities
 };

@@ -49,12 +49,12 @@ const errorMessage = (state = null, action) => {
     return handleAction ? handleAction() : state;
 };
 
+export const getItems = (state) => state.items;
+export const getIsInProgress = (state) => state.isInProgress;
+export const getErrorMessage = (state) => state.errorMessage;
+
 export default combineReducers({
     items,
     isInProgress,
     errorMessage
 });
-
-export const getItems = (state) => state.items;
-export const getIsInProgress = (state) => state.isInProgress;
-export const getErrorMessage = (state) => state.errorMessage;

@@ -27,4 +27,5 @@ const mapStateToProps = (state) => ({
     errorMessage: getEntitiesErrorMessage(state)
 });
 
+export { AllEntitiesList };
 export default connect(mapStateToProps, { fetchEntities })(AllEntitiesList);
