@@ -13,7 +13,7 @@ const EntityDetails = ({ params, location }) => {
 
     return (
         <div>
-            <PageHeader>Entity details: {params.entityName}</PageHeader>
+            <PageHeader>Entity details: {params.id}</PageHeader>
             {queryParametersListWithHeader}
         </div>
     );
@@ -21,7 +21,7 @@ const EntityDetails = ({ params, location }) => {
 
 EntityDetails.propTypes = {
     params: React.PropTypes.shape({
-        entityName: React.PropTypes.string.isRequired
+        id: React.PropTypes.string.isRequired
     }.isRequired),
     location: React.PropTypes.shape({
         query: React.PropTypes.object

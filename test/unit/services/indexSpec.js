@@ -20,28 +20,13 @@ describe('services', function () {
     });
 
     describe('storeEntity', function () {
-        it('should return the stored entity and status 200 if it was created', function () {
+        it('should return the stored entity if successful', function () {
             const entity = { name: 'foo' };
             const { storeEntity } = createServices();
 
             const scope = nock('http://localhost:3000')
-            .put(`/api/entities/${entity.name}`)
+            .post('/api/entities')
             .reply(200, entity);
-
-            return storeEntity(entity.name)
-            .then((result) => {
-                expect(result).to.deep.equal(entity);
-                scope.done();
-            });
-        });
-
-        it('should return the entity and status 201 if it already existed', function () {
-            const entity = { name: 'foo' };
-            const { storeEntity } = createServices();
-
-            const scope = nock('http://localhost:3000')
-            .put(`/api/entities/${entity.name}`)
-            .reply(201, entity);
 
             return storeEntity(entity.name)
             .then((result) => {
@@ -54,7 +39,7 @@ describe('services', function () {
             const { storeEntity } = createServices();
 
             const scope = nock('http://localhost:3000')
-            .put('/api/entities/anything')
+            .post('/api/entities')
             .reply(500);
 
             return storeEntity('anything')
@@ -66,7 +51,7 @@ describe('services', function () {
     });
 
     describe('fetchEntities', function () {
-        it('should return the entities and status 200 if the request was successful', function () {
+        it('should return the entities if the request was successful', function () {
             const { fetchEntities } = createServices();
             const entities = [ { name: 'entity1' }, { name: 'entity2' } ];
 

@@ -1,39 +1,61 @@
 import express from 'express';
 import R from 'ramda';
 
-const createEntitiesRouter = (entities = []) => {
+const createEntitiesRouter = (generateId, entities = []) => {
     const entitiesRouter = express.Router(); // eslint-disable-line new-cap
 
-    const getAllEntities = (req, res) => {
-        res.json(entities);
+    const getEntities = (req, res) => {
+        res.status(200)
+        .json(entities);
     };
 
     const getEntity = (req, res) => {
-        const { entityName } = req.params;
+        const id = parseInt(req.params.id, 10);
+        const entity = R.find(R.propEq('id', id))(entities);
 
-        if (R.contains(entityName, entities)) {
-            res.status(200).send({ entity: entityName });
+        if (entity) {
+            res.status(200)
+            .json(entity);
         } else {
-            res.status(404).end();
+            res.status(404)
+            .end();
         }
     };
 
-    const putEntity = (req, res) => {
-        const { entityName } = req.params;
-        const entity = { name: entityName };
+    const addEntity = (req, res) => {
+        const createdEntity = {
+            id: generateId(),
+            ...req.body
+        };
 
-        if (R.contains(entityName, entities)) {
-            res.status(200).send(entity);
+        entities.push(createdEntity);
+
+        res.status(201)
+        .location(`/${createdEntity.id}`)
+        .json(createdEntity);
+    };
+
+    const updateEntity = (req, res) => {
+        const id = parseInt(req.params.id, 10);
+        let entity = R.find(R.propEq('id', id))(entities);
+        const updatedEntity = R.merge(entity, req.body);
+
+        if (entity) {
+            entity = updatedEntity;
+
+            res.status(200)
+            .location(`/${updatedEntity.id}`)
+            .json(updatedEntity);
         } else {
-            entities.push(entity);
-
-            res.status(201).send(entity);
+            res.status(400)
+            .end();
         }
     };
 
-    entitiesRouter.get('/', getAllEntities);
-    entitiesRouter.get('/:entityName', getEntity);
-    entitiesRouter.put('/:entityName', putEntity);
+    entitiesRouter.get('/', getEntities);
+    entitiesRouter.post('/', addEntity);
+    entitiesRouter.get('/:id', getEntity);
+    entitiesRouter.put('/:id', updateEntity);
 
     return entitiesRouter;
 };
