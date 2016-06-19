@@ -28,7 +28,7 @@ server.get('/main.css', function (req, res) {
     res.sendFile(path.join(rootPath, 'build', 'main.css'));
 });
 
-server = createServer(server, '/api', { entities: [ { name: 'foo' }, { name: 'bar' }, { name: 'baz' } ] });
+server = createServer(server, '/api');
 
 server.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, '..', 'index.html'));
