@@ -5,13 +5,15 @@ const createEntityDetailsUri = (id) => {
     return `/entities/${id}`;
 };
 
-const EntityListItem = ({ name, id }) => {
-    return <Link to={createEntityDetailsUri(id)}>{name}</Link>;
+const EntityListItem = ({ entity }) => {
+    return <Link to={createEntityDetailsUri(entity.id)}>{entity.name}</Link>;
 };
 
 EntityListItem.propTypes = {
-    name: React.PropTypes.string.isRequired,
-    id: React.PropTypes.string.isRequired
+    entity: React.PropTypes.shape({
+        name: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string.isRequired
+    }).isRequired
 };
 
 export default EntityListItem;

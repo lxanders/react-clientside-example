@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
-import { storeEntityIfNew, fetchEntities } from '../../../src/actions/index';
+import { storeEntity, fetchEntities } from '../../../src/actions/index';
 import * as types from '../../../src/actions/types';
 
 describe('actions', function () {
@@ -19,33 +19,17 @@ describe('actions', function () {
         return mockStore(getState);
     };
 
-    describe('storeEntityIfNew', function () {
+    describe('storeEntity', function () {
         it('should dispatch an action containing the added entity if successful', function () {
             const entityInResponse = { name: 'foo' };
             const services = { storeEntity: () => Promise.resolve(entityInResponse) };
             const store = createStore(services);
 
-            return store.dispatch(storeEntityIfNew(entityInResponse.name))
+            return store.dispatch(storeEntity(entityInResponse))
             .then(() => {
                 const expectedActions = [
                     { type: types.ADD_ENTITY_REQUEST },
                     { type: types.ADD_ENTITY_SUCCESS, entity: entityInResponse }
-                ];
-
-                expect(store.getActions()).to.deep.equal(expectedActions);
-            });
-        });
-
-        it('should dispatch an action containing an error message if the entity already existed', function () {
-            const entity = { name: 'foo' };
-            const services = { storeEntity: () => Promise.resolve(entity) };
-            const store = createStore(services, [ entity ]);
-
-            return store.dispatch(storeEntityIfNew(entity.name))
-            .then(() => {
-                const duplicateEntityErrorMessage = 'Entity with that name was already present. Not adding.';
-                const expectedActions = [
-                    { type: types.ADD_ENTITY_FAILURE, errorMessage: duplicateEntityErrorMessage }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -57,7 +41,7 @@ describe('actions', function () {
             const services = { storeEntity: () => Promise.reject(new Error(errorMessageInResponse)) };
             const store = createStore(services);
 
-            return store.dispatch(storeEntityIfNew('foo'))
+            return store.dispatch(storeEntity('foo'))
             .then(() => {
                 const expectedActions = [
                     { type: types.ADD_ENTITY_REQUEST },

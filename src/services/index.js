@@ -1,12 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
 const createServices = (fetchModule = fetch) => {
-    const storeEntity = (entityName) => {
-        const entityPayload = { name: entityName };
-
+    const storeEntity = (entity) => {
         return fetchModule('http://localhost:3000/api/entities', {
             method: 'post',
-            body: JSON.stringify(entityPayload),
+            body: JSON.stringify(entity),
             headers: { 'Content-Type': 'application/json' } })
         .then((response) => {
             if (response.status === 200 || response.status === 201) {

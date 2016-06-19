@@ -16,7 +16,10 @@ class AllEntitiesList extends React.Component {
 
 AllEntitiesList.propTypes = {
     fetchEntities: React.PropTypes.func.isRequired,
-    items: React.PropTypes.arrayOf(React.PropTypes.shape({ name: React.PropTypes.string.isRequired })),
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({
+        name: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string.isRequired
+    })),
     isInProgress: React.PropTypes.bool.isRequired,
     errorMessage: React.PropTypes.string
 };

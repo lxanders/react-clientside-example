@@ -8,9 +8,9 @@ const EntityList = ({ entities }) => {
         <section className='entity-list'>
             {entitiesHeader}
             <ul>
-                {entities.map((entity, index) =>
-                    <li key={index}>
-                        <EntityListItem {...entity} />
+                {entities.map((entity) =>
+                    <li key={entity.id}>
+                        <EntityListItem entity={entity} />
                     </li>
                 )}
             </ul>

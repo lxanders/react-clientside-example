@@ -5,16 +5,16 @@ import { Link } from 'react-router';
 import EntityListItem from '../../../src/components/EntityListItem';
 
 describe('EntityListItem', function () {
-    const createComponent = (entityProps) => {
-        return <EntityListItem {...entityProps} />;
+    const createComponent = (entity) => {
+        return <EntityListItem entity={entity} />;
     };
 
     it('should use the entity id for the link creation', function () {
-        const entityProps = { name: 'anyName', id: 'abcd' };
-        const entityListItem = shallow(createComponent(entityProps));
+        const entity = { name: 'anyName', id: 'abcd' };
+        const entityListItem = shallow(createComponent(entity));
         const link = entityListItem.find(Link);
 
-        expect(link.prop('to')).to.equal(`/entities/${entityProps.id}`);
-        expect(link.children().text()).to.equal(entityProps.name);
+        expect(link.prop('to')).to.equal(`/entities/${entity.id}`);
+        expect(link.children().text()).to.equal(entity.name);
     });
 });

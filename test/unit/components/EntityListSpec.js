@@ -10,11 +10,11 @@ describe('EntityList', function () {
         return {
             entities: [
                 {
-                    id: 3,
+                    id: '3',
                     name: 'any name'
                 },
                 {
-                    id: 7,
+                    id: '7',
                     name: 'other name'
                 }
             ]
@@ -43,12 +43,12 @@ describe('EntityList', function () {
     });
 
     it('should render the passed in entities in the correct oder', function () {
-        const entities = [ { id: 11, name: 'foo' }, { id: 22, name: 'bar' } ];
+        const entities = [ { id: '11', name: 'foo' }, { id: '22', name: 'bar' } ];
         const entityList = shallow(createComponent({ entities }));
         const entityListItems = entityList.find(EntityListItem);
 
         expect(entityListItems.length).to.equal(entities.length);
-        expect(entityListItems.first().props()).to.deep.equal(R.head(entities));
-        expect(entityListItems.last().props()).to.deep.equal(R.last(entities));
+        expect(entityListItems.first().props()).to.deep.equal({ entity: R.head(entities) });
+        expect(entityListItems.last().props()).to.deep.equal({ entity: R.last(entities) });
     });
 });
