@@ -20,7 +20,8 @@ const EntityList = ({ entities }) => {
 
 EntityList.propTypes = {
     entities: React.PropTypes.arrayOf(React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired
+        name: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string.isRequired
     }))
 };
 
