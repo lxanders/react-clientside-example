@@ -1,18 +1,13 @@
 import R from 'ramda';
 import * as types from './types';
 
-export const addEntity = (payload) => ({
-    type: types.ADD_ENTITY,
-    payload
-});
-
-export function storeEntity(entityName) {
+function storeEntity(entityName) {
     return (dispatch, getState, services) => {
-        dispatch(addEntity({ status: 'storing' }));
+        dispatch({ type: types.ADD_ENTITY_REQUEST });
 
         return services.storeEntity(entityName)
-        .then((entity) => dispatch(addEntity({ status: 'success', entity })))
-        .catch((error) => dispatch(addEntity({ status: 'error', error: error.message })));
+        .then((entity) => dispatch({ type: types.ADD_ENTITY_SUCCESS, entity }))
+        .catch((error) => dispatch({ type: types.ADD_ENTITY_FAILURE, errorMessage: error.message }));
     };
 }
 
@@ -28,25 +23,20 @@ export function storeEntityIfNew(entityName) {
             return dispatch(storeEntity(entityName));
         }
 
-        const warning = 'Entity with that name was already present. Not adding.';
+        const errorMessage = 'Entity with that name was already present. Not adding.';
 
-        dispatch(addEntity({ status: 'warning', warning }));
+        dispatch({ type: types.ADD_ENTITY_FAILURE, errorMessage });
 
         return Promise.resolve();
     };
 }
 
-export const requestEntities = (payload) => ({
-    type: types.REQUEST_ENTITIES,
-    payload
-});
-
 export function fetchEntities() {
     return (dispatch, getState, services) => {
-        dispatch(requestEntities({ status: 'fetching' }));
+        dispatch({ type: types.FETCH_ENTITIES_REQUEST });
 
         return services.fetchEntities()
-        .then((entities) => dispatch(requestEntities({ status: 'success', items: entities })))
-        .catch((error) => dispatch(requestEntities({ status: 'error', error: error.message })));
+        .then((entities) => dispatch({ type: types.FETCH_ENTITIES_SUCCESS, items: entities }))
+        .catch((error) => dispatch({ type: types.FETCH_ENTITIES_FAILURE, errorMessage: error.message }));
     };
 }

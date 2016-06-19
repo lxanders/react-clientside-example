@@ -21,31 +21,31 @@ describe('actions', function () {
 
     describe('storeEntityIfNew', function () {
         it('should dispatch an action containing the added entity if successful', function () {
-            const entity = { name: 'foo' };
-            const services = { storeEntity: () => Promise.resolve(entity) };
+            const entityInResponse = { name: 'foo' };
+            const services = { storeEntity: () => Promise.resolve(entityInResponse) };
             const store = createStore(services);
 
-            return store.dispatch(storeEntityIfNew(entity.name))
+            return store.dispatch(storeEntityIfNew(entityInResponse.name))
             .then(() => {
                 const expectedActions = [
-                    { type: types.ADD_ENTITY, payload: { status: 'storing' } },
-                    { type: types.ADD_ENTITY, payload: { status: 'success', entity } }
+                    { type: types.ADD_ENTITY_REQUEST },
+                    { type: types.ADD_ENTITY_SUCCESS, entity: entityInResponse }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
             });
         });
 
-        it('should dispatch an action containing a warning if the entity already existed locally', function () {
+        it('should dispatch an action containing an error message if the entity already existed', function () {
             const entity = { name: 'foo' };
             const services = { storeEntity: () => Promise.resolve(entity) };
             const store = createStore(services, [ entity ]);
 
             return store.dispatch(storeEntityIfNew(entity.name))
             .then(() => {
-                const warning = 'Entity with that name was already present. Not adding.';
+                const duplicateEntityErrorMessage = 'Entity with that name was already present. Not adding.';
                 const expectedActions = [
-                    { type: types.ADD_ENTITY, payload: { status: 'warning', warning } }
+                    { type: types.ADD_ENTITY_FAILURE, errorMessage: duplicateEntityErrorMessage }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -53,16 +53,15 @@ describe('actions', function () {
         });
 
         it('should dispatch an action containing an error message if there was an error', function () {
-            const entity = { name: 'foo' };
-            const errorMessage = 'any error';
-            const services = { storeEntity: () => Promise.reject(new Error(errorMessage)) };
+            const errorMessageInResponse = 'any error';
+            const services = { storeEntity: () => Promise.reject(new Error(errorMessageInResponse)) };
             const store = createStore(services);
 
-            return store.dispatch(storeEntityIfNew(entity.name))
+            return store.dispatch(storeEntityIfNew('foo'))
             .then(() => {
                 const expectedActions = [
-                    { type: types.ADD_ENTITY, payload: { status: 'storing' } },
-                    { type: types.ADD_ENTITY, payload: { status: 'error', error: errorMessage } }
+                    { type: types.ADD_ENTITY_REQUEST },
+                    { type: types.ADD_ENTITY_FAILURE, errorMessage: errorMessageInResponse }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -79,8 +78,8 @@ describe('actions', function () {
             return store.dispatch(fetchEntities())
             .then(() => {
                 const expectedActions = [
-                    { type: types.REQUEST_ENTITIES, payload: { status: 'fetching' } },
-                    { type: types.REQUEST_ENTITIES, payload: { status: 'success', items: entitiesInResponse } }
+                    { type: types.FETCH_ENTITIES_REQUEST },
+                    { type: types.FETCH_ENTITIES_SUCCESS, items: entitiesInResponse }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
@@ -88,15 +87,15 @@ describe('actions', function () {
         });
 
         it('should dispatch an action containing an error message if there was an error', function () {
-            const errorMessage = 'any error';
-            const services = { fetchEntities: () => Promise.reject(new Error(errorMessage)) };
+            const errorMessageInResponse = 'any error';
+            const services = { fetchEntities: () => Promise.reject(new Error(errorMessageInResponse)) };
             const store = createStore(services);
 
             return store.dispatch(fetchEntities())
             .then(() => {
                 const expectedActions = [
-                    { type: types.REQUEST_ENTITIES, payload: { status: 'fetching' } },
-                    { type: types.REQUEST_ENTITIES, payload: { status: 'error', error: errorMessage } }
+                    { type: types.FETCH_ENTITIES_REQUEST },
+                    { type: types.FETCH_ENTITIES_FAILURE, errorMessage: errorMessageInResponse }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);

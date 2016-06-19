@@ -9,6 +9,6 @@ const reducers = combineReducers({
 
 export default reducers;
 
-export const getEntityItems = (state) => fromEntities.getEntityItems(state.entities);
-export const getEntityStatus = (state) => fromEntities.getEntityStatus(state.entities);
-export const getEntityError = (state) => fromEntities.getEntityError(state.entities);
+export const getEntitiesItems = (state) => fromEntities.getItems(state.entities);
+export const getEntitiesIsInProgress = (state) => fromEntities.getIsInProgress(state.entities);
+export const getEntitiesErrorMessage = (state) => fromEntities.getErrorMessage(state.entities);
