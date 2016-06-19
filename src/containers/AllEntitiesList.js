@@ -1,5 +1,4 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EntityList from '../components/EntityList';
 import { fetchEntities } from '../actions/index';
@@ -28,8 +27,4 @@ const mapStateToProps = (state) => ({
     error: getEntityError(state)
 });
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ fetchEntities }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllEntitiesList);
+export default connect(mapStateToProps, { fetchEntities })(AllEntitiesList);
