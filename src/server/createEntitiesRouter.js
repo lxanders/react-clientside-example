@@ -10,7 +10,7 @@ const createEntitiesRouter = (generateId, entities = []) => {
     };
 
     const getEntity = (req, res) => {
-        const id = parseInt(req.params.id, 10);
+        const { id } = req.params;
         const entity = R.find(R.propEq('id', id))(entities);
 
         if (entity) {
@@ -36,7 +36,7 @@ const createEntitiesRouter = (generateId, entities = []) => {
     };
 
     const updateEntity = (req, res) => {
-        const id = parseInt(req.params.id, 10);
+        const { id } = req.params;
         let entity = R.find(R.propEq('id', id))(entities);
         const updatedEntity = R.merge(entity, req.body);
 

@@ -11,7 +11,7 @@ describe('createEntitiesRouter', function () {
     };
 
     it('should respond with 200 and all entities for GET /entities if successful', function () {
-        const entities = [ { name: 'any', id: 10 }, { name: 'other', id: 20 } ];
+        const entities = [ { name: 'any', id: '10' }, { name: 'other', id: '20' } ];
         const server = prepareServer(entities);
 
         return request(server)
@@ -23,7 +23,7 @@ describe('createEntitiesRouter', function () {
     });
 
     it('should respond with 200 and the selected entity for GET /entities/:id if successful', function () {
-        const entityId = 0;
+        const entityId = '0';
         const entity = { name: 'anyEntity', id: entityId };
         const server = prepareServer([ entity ]);
 
@@ -45,7 +45,7 @@ describe('createEntitiesRouter', function () {
     });
 
     it('should respond with 201 and the created entity for POST /entities if successful', function () {
-        const id = 123;
+        const id = '123';
         const generateId = () => id;
         const entityPayload = { name: 'prior-non-existing-entity' };
         const expectedEntity = { name: entityPayload.name, id };
@@ -62,7 +62,7 @@ describe('createEntitiesRouter', function () {
     });
 
     it('should respond with 200 and the updated entity for PUT /entities/:id if successful', function () {
-        const entity = { id: 123, name: 'oldName' };
+        const entity = { id: '123', name: 'oldName' };
         const updatedEntity = { id: entity.id, name: 'newName' };
         const server = prepareServer([ entity ]);
 
