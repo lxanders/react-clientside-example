@@ -1,7 +1,7 @@
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
-import { storeEntity, fetchEntities } from '../../../src/actions/index';
+import { storeEntity, fetchEntity, fetchEntities } from '../../../src/actions/index';
 import * as types from '../../../src/actions/types';
 
 describe('actions', function () {
@@ -46,6 +46,40 @@ describe('actions', function () {
                 const expectedActions = [
                     { type: types.ADD_ENTITY_REQUEST },
                     { type: types.ADD_ENTITY_FAILURE, errorMessage: errorMessageInResponse }
+                ];
+
+                expect(store.getActions()).to.deep.equal(expectedActions);
+            });
+        });
+    });
+
+    describe('fetchEntity', function () {
+        it('should dispatch an action containing the fetched entity if successful', function () {
+            const entityInResponse = { name: 'entity1', id: 'foo-a' };
+            const services = { fetchEntity: () => Promise.resolve(entityInResponse) };
+            const store = createStore(services);
+
+            return store.dispatch(fetchEntity(entityInResponse.id))
+            .then(() => {
+                const expectedActions = [
+                    { type: types.FETCH_ENTITY_REQUEST },
+                    { type: types.FETCH_ENTITY_SUCCESS, entity: entityInResponse }
+                ];
+
+                expect(store.getActions()).to.deep.equal(expectedActions);
+            });
+        });
+
+        it('should dispatch an action containing an error message if there was an error', function () {
+            const errorMessageInResponse = 'any error';
+            const services = { fetchEntity: () => Promise.reject(new Error(errorMessageInResponse)) };
+            const store = createStore(services);
+
+            return store.dispatch(fetchEntity())
+            .then(() => {
+                const expectedActions = [
+                    { type: types.FETCH_ENTITY_REQUEST },
+                    { type: types.FETCH_ENTITY_FAILURE, errorMessage: errorMessageInResponse }
                 ];
 
                 expect(store.getActions()).to.deep.equal(expectedActions);
