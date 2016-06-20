@@ -13,6 +13,17 @@ const items = (state = [], action) => {
     }
 };
 
+const ids = (state = [], action) => {
+    const handlers = {
+        [types.ADD_ENTITY_SUCCESS]: () => [ ...state, action.entity.id ],
+        [types.FETCH_ENTITIES_SUCCESS]: () => [ ...state, ...R.map((entity) => entity.id, action.items) ]
+    };
+
+    const handleAction = handlers[action.type];
+
+    return handleAction ? handleAction() : state;
+};
+
 const isInProgress = (state = false, action) => {
     const inProgress = () => true;
     const notInProgress = () => false;
@@ -55,6 +66,7 @@ export const getErrorMessage = (state) => state.errorMessage;
 
 export default combineReducers({
     items,
+    ids,
     isInProgress,
     errorMessage
 });
