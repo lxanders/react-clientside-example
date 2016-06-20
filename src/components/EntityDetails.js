@@ -1,20 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { PageHeader } from 'react-bootstrap';
-import R from 'ramda';
-import KeyValueList from './KeyValueList';
 
-const EntityDetails = ({ params, location }) => {
-    const queryParametersListWithHeader = R.isEmpty(location.query) ? null : (
-        <div>
-            <h3>Query parameters</h3>
-            <KeyValueList object={location.query} />
-        </div>
-    );
-
+const EntityDetails = ({ params }) => {
     return (
         <div>
             <PageHeader>Entity details: {params.id}</PageHeader>
-            {queryParametersListWithHeader}
         </div>
     );
 };
@@ -22,9 +13,6 @@ const EntityDetails = ({ params, location }) => {
 EntityDetails.propTypes = {
     params: React.PropTypes.shape({
         id: React.PropTypes.string.isRequired
-    }.isRequired),
-    location: React.PropTypes.shape({
-        query: React.PropTypes.object
     }.isRequired)
 };
 

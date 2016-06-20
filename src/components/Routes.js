@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import App from './App';
 import Home from './Home';
-import About from './About';
+import QueryParamsDemo from './QueryParamsDemo';
 import EntityDetails from './EntityDetails';
 import NotFound from './NotFound';
 
@@ -14,7 +14,7 @@ const Routes = (props, { store }) => {
         <Router history={history}>
             <Route path='/' component={App}>
                 <IndexRoute component={Home}/>
-                <Route path='about' component={About} />
+                <Route path='queryParamsDemo' component={QueryParamsDemo} />
                 <Route path='entities/:id' component={EntityDetails} />
                 <Route path='*' component={NotFound} />
             </Route>
