@@ -5,9 +5,9 @@ import { PageHeader } from 'react-bootstrap';
 import NotFound from '../../../src/components/NotFound';
 
 describe('NotFound', function () {
-    function createComponent() {
+    const createComponent = () => {
         return <NotFound />;
-    }
+    };
 
     it('should render the page header for NotFound', function () {
         const notFound = shallow(createComponent());

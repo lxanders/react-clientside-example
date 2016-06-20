@@ -8,9 +8,9 @@ const EntityList = ({ entities }) => {
         <section className='entity-list'>
             {entitiesHeader}
             <ul>
-                {entities.map((entity, index) =>
-                    <li key={index}>
-                        <EntityListItem {...entity} />
+                {entities.map((entity) =>
+                    <li key={entity.id}>
+                        <EntityListItem entity={entity} />
                     </li>
                 )}
             </ul>
@@ -20,7 +20,8 @@ const EntityList = ({ entities }) => {
 
 EntityList.propTypes = {
     entities: React.PropTypes.arrayOf(React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired
+        name: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string.isRequired
     }))
 };
 

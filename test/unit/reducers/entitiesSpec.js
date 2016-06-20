@@ -1,94 +1,129 @@
 import { expect } from 'chai';
-import { addEntity, requestEntities } from '../../../src/actions/index';
+import * as types from '../../../src/actions/types';
 import entities from '../../../src/reducers/entities';
 
-describe('entities', function () {
-    describe('add entity', function () {
-        it('it should create the state for the storing status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const action = addEntity({ status: 'storing' });
-            const expectedState = {
-                status: 'storing',
-                items: state.items
-            };
+describe('entities reducer', function () {
+    it('should create the initial state', function () {
+        const expectedState = {
+            items: [],
+            isInProgress: false,
+            errorMessage: null
+        };
 
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
-
-        it('it should create the state for the success status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const entity = { name: 'new entity' };
-            const action = addEntity({ status: 'success', entity });
-            const expectedState = {
-                status: 'success',
-                items: [ { name: 'anything' }, entity ]
-            };
-
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
-
-        it('it should create the state for the warning status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const warning = 'a warning message';
-            const action = addEntity({ status: 'warning', warning });
-            const expectedState = {
-                status: 'warning',
-                warning,
-                items: state.items
-            };
-
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
-
-        it('it should create the state for the error status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const error = 'an error message';
-            const action = addEntity({ status: 'error', error });
-            const expectedState = {
-                status: 'error',
-                error,
-                items: state.items
-            };
-
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
+        expect(entities(undefined, {})).to.deep.equal(expectedState);
     });
 
-    describe('request entities', function () {
-        it('it should create the state for the fetching status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const action = requestEntities({ status: 'fetching' });
-            const expectedState = {
-                status: 'fetching',
-                items: state.items
-            };
+    const createInitialItems = () => [ { name: 'anyEntity' } ];
 
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
+    it('should set the corresponding flag on ADD_ENTITY_REQUEST', function () {
+        const action = { type: types.ADD_ENTITY_REQUEST };
 
-        it('it should create the state for the success status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const items = [ { name: 'new entity 1' }, { name: 'new entity 2' } ];
-            const action = requestEntities({ status: 'success', items });
-            const expectedState = {
-                status: 'success',
-                items: [ { name: 'anything' }, ...items ]
-            };
+        const state = {
+            items: createInitialItems(),
+            isInProgress: false,
+            errorMessage: 'any prior error message'
+        };
 
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
+        const expectedState = {
+            items: createInitialItems(),
+            isInProgress: true,
+            errorMessage: null
+        };
 
-        it('it should create the state for the error status', function () {
-            const state = { items: [ { name: 'anything' } ] };
-            const error = 'an error message';
-            const action = requestEntities({ status: 'error', error });
-            const expectedState = {
-                status: 'error',
-                error,
-                items: state.items
-            };
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
 
-            expect(entities(state, action)).to.deep.equal(expectedState);
-        });
+    it('should add a new entity on ADD_ENTITY_SUCCESS', function () {
+        const newEntity = { name: 'newEntity' };
+        const action = { type: types.ADD_ENTITY_SUCCESS, entity: newEntity };
+
+        const state = {
+            items: createInitialItems(),
+            isInProgress: true,
+            errorMessage: 'any prior error message'
+        };
+
+        const expectedState = {
+            items: [ ...createInitialItems(), newEntity ],
+            isInProgress: false,
+            errorMessage: null
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
+    it('should save an error message for ADD_ENTITY_FAILURE', function () {
+        const newErrorMessage = 'new error message';
+        const action = { type: types.ADD_ENTITY_FAILURE, errorMessage: newErrorMessage };
+
+        const state = {
+            items: createInitialItems(),
+            isInProgress: true,
+            errorMessage: null
+        };
+
+        const expectedState = {
+            items: createInitialItems(),
+            isInProgress: false,
+            errorMessage: newErrorMessage
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
+    it('should set the corresponding flag on FETCH_ENTITIES_REQUEST', function () {
+        const action = { type: types.FETCH_ENTITIES_REQUEST };
+
+        const state = {
+            items: createInitialItems(),
+            isInProgress: false,
+            errorMessage: 'any prior error message'
+        };
+
+        const expectedState = {
+            items: createInitialItems(),
+            isInProgress: true,
+            errorMessage: null
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
+    it('should add new entities on FETCH_TODOS_SUCCESS', function () {
+        const fetchedEntities = [ { name: 'newEntity1' }, { name: 'newEntity2' } ];
+        const action = { type: types.FETCH_ENTITIES_SUCCESS, items: fetchedEntities };
+
+        const state = {
+            items: createInitialItems(),
+            isInProgress: true,
+            errorMessage: 'any prior error message'
+        };
+
+        const expectedState = {
+            items: [ ...createInitialItems(), ...fetchedEntities ],
+            isInProgress: false,
+            errorMessage: null
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
+    it('should save an error message for FETCH_ENTITIES_FAILURE', function () {
+        const newErrorMessage = 'new error message';
+        const action = { type: types.FETCH_ENTITIES_FAILURE, errorMessage: newErrorMessage };
+
+        const state = {
+            items: createInitialItems(),
+            isInProgress: true,
+            errorMessage: null
+        };
+
+        const expectedState = {
+            items: createInitialItems(),
+            isInProgress: false,
+            errorMessage: newErrorMessage
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
     });
 });

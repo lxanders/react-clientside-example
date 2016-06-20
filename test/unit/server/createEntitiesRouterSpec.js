@@ -4,14 +4,14 @@ import express from 'express';
 import createServer from '../../../src/server/createServer';
 
 describe('createEntitiesRouter', function () {
-    function prepareServer(entities = []) {
+    const prepareServer = (entities = [], generateId) => {
         const apiBasePath = '';
 
-        return createServer(express(), apiBasePath, { entities });
-    }
+        return createServer(express(), apiBasePath, { entities }, generateId);
+    };
 
-    it('should fetch all entities for GET /entities', function () {
-        const entities = [ 'any', 'entities', 'in', 'here' ];
+    it('should respond with 200 and all entities for GET /entities if successful', function () {
+        const entities = [ { name: 'any', id: '10' }, { name: 'other', id: '20' } ];
         const server = prepareServer(entities);
 
         return request(server)
@@ -22,44 +22,66 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should fetch an entity for GET /entities/:entityName', function () {
-        const entity = 'existing-entity';
+    it('should respond with 200 and the selected entity for GET /entities/:id if successful', function () {
+        const entityId = '0';
+        const entity = { name: 'anyEntity', id: entityId };
         const server = prepareServer([ entity ]);
 
         return request(server)
-            .get(`/entities/${entity}`)
+            .get(`/entities/${entityId}`)
             .expect(200)
             .then((res) => {
-                expect(res.body).to.deep.equal({ entity });
+                expect(res.body).to.deep.equal(entity);
             });
     });
 
-    it('should respond with 404 for GET /entities/:entityName with an non-existing entity', function () {
-        const server = prepareServer();
+    it('should respond with 404 for GET /entities/:id for a non-existing entity', function () {
+        const emptyEntities = [];
+        const server = prepareServer(emptyEntities);
 
         return request(server)
-            .get('/entities/non-existing-entity')
+            .get('/entities/123')
             .expect(404);
     });
 
-    it('should add a non-existing entity for PUT /entities/:entityName', function () {
-        const entityName = 'prior-non-existing-entity';
-        const server = prepareServer();
+    it('should respond with 201 and the created entity for POST /entities if successful', function () {
+        const id = '123';
+        const generateId = () => id;
+        const entityPayload = { name: 'prior-non-existing-entity' };
+        const expectedEntity = { name: entityPayload.name, id };
+        const server = prepareServer(undefined, generateId);
 
         return request(server)
-            .put(`/entities/${entityName}`)
+            .post('/entities')
+            .send(entityPayload)
             .expect(201)
+            .expect('location', `/${id}`)
             .then((res) => {
-                expect(res.body).to.deep.equal({ name: entityName });
+                expect(res.body).to.deep.equal(expectedEntity);
             });
     });
 
-    it('should respond with the entity for PUT /entities/:entityName with an already existing entity', function () {
-        const entity = 'existing-entity';
+    it('should respond with 200 and the updated entity for PUT /entities/:id if successful', function () {
+        const entity = { id: '123', name: 'oldName' };
+        const updatedEntity = { id: entity.id, name: 'newName' };
         const server = prepareServer([ entity ]);
 
         return request(server)
-            .put(`/entities/${entity}`)
-            .expect(200);
+            .put(`/entities/${entity.id}`)
+            .send(updatedEntity)
+            .expect(200)
+            .expect('location', `/${entity.id}`)
+            .then((res) => {
+                expect(res.body).to.deep.equal(updatedEntity);
+            });
+    });
+
+    it('should respond with 400 for PUT /entities/:id if no entity with the specified id existed', function () {
+        const emptyEntities = [];
+        const server = prepareServer(emptyEntities);
+
+        return request(server)
+            .put('/entities/123')
+            .expect(400);
     });
 });

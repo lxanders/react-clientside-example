@@ -1,22 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-function createEntityDetailsUri(name) {
-    return `/entities/${name}`;
-}
+const createEntityDetailsUri = (id) => {
+    return `/entities/${id}`;
+};
 
-function normalizeEntityName(name) {
-    return name.trim().toLowerCase().replace(/\W/g, '');
-}
-
-const EntityListItem = ({ name }) => {
-    const normalizedName = normalizeEntityName(name);
-
-    return <Link to={createEntityDetailsUri(normalizedName)}>{normalizedName}</Link>;
+const EntityListItem = ({ entity }) => {
+    return <Link to={createEntityDetailsUri(entity.id)}>{entity.name}</Link>;
 };
 
 EntityListItem.propTypes = {
-    name: React.PropTypes.string.isRequired
+    entity: React.PropTypes.shape({
+        name: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string.isRequired
+    }).isRequired
 };
 
 export default EntityListItem;

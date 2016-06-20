@@ -15,7 +15,7 @@ const Routes = (props, { store }) => {
             <Route path='/' component={App}>
                 <IndexRoute component={Home}/>
                 <Route path='about' component={About} />
-                <Route path='entities/:entityName' component={EntityDetails} />
+                <Route path='entities/:id' component={EntityDetails} />
                 <Route path='*' component={NotFound} />
             </Route>
         </Router>

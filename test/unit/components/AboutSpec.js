@@ -5,9 +5,9 @@ import { PageHeader } from 'react-bootstrap';
 import About from '../../../src/components/About';
 
 describe('About', function () {
-    function createComponent() {
+    const createComponent = () => {
         return <About />;
-    }
+    };
 
     it('should render the page header for About', function () {
         const about = shallow(createComponent());
