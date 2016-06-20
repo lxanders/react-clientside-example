@@ -28,7 +28,7 @@ describe('services', function () {
             .post('/api/entities')
             .reply(200, entity);
 
-            return storeEntity(entity.name)
+            return storeEntity(entity)
             .then((result) => {
                 expect(result).to.deep.equal(entity);
                 scope.done();
@@ -42,9 +42,37 @@ describe('services', function () {
             .post('/api/entities')
             .reply(500);
 
-            return storeEntity('anything')
-            .catch((result) => {
-                expect(result).to.deep.equal(new Error('500: Internal Server Error'));
+            return expect(storeEntity()).to.be.rejectedWith('500: Internal Server Error')
+            .then(() => {
+                scope.done();
+            });
+        });
+    });
+
+    describe('fetchEntity', function () {
+        it('should return the entity if the request was successful', function () {
+            const { fetchEntity } = createServices();
+            const entity = { name: 'entity1', id: '123' };
+
+            const scope = nock('http://localhost:3000')
+            .get('/api/entities/123')
+            .reply(200, entity);
+
+            return expect(fetchEntity(entity.id)).to.become(entity)
+            .then(() => {
+                scope.done();
+            });
+        });
+
+        it('should return rejected if the request did not return successful', function () {
+            const { fetchEntity } = createServices();
+
+            const scope = nock('http://localhost:3000')
+            .get('/api/entities/123')
+            .reply(404);
+
+            return expect(fetchEntity('123')).to.be.rejectedWith('404: Not Found')
+            .then(() => {
                 scope.done();
             });
         });

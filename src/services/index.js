@@ -15,6 +15,17 @@ const createServices = (fetchModule = fetch) => {
         });
     };
 
+    const fetchEntity = (id) => {
+        return fetchModule(`http://localhost:3000/api/entities/${id}`, { method: 'get' })
+        .then((response) => {
+            if (response.status === 200) {
+                return response.json();
+            }
+
+            throw new Error(`${response.status}: ${response.statusText}`);
+        });
+    };
+
     const fetchEntities = () => {
         return fetchModule('http://localhost:3000/api/entities', { method: 'get' })
         .then((response) => {
@@ -28,6 +39,7 @@ const createServices = (fetchModule = fetch) => {
 
     return {
         storeEntity,
+        fetchEntity,
         fetchEntities
     };
 };
