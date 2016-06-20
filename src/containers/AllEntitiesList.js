@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import EntityList from '../components/EntityList';
 import { fetchEntities } from '../actions/index';
 import { getEntitiesItems, getEntitiesIsInProgress, getEntitiesErrorMessage } from '../reducers/index';
+import { entities as entitiesDefinition } from '../lib/typeDefinitions';
 
 class AllEntitiesList extends React.Component {
     componentDidMount() {
@@ -16,10 +17,7 @@ class AllEntitiesList extends React.Component {
 
 AllEntitiesList.propTypes = {
     fetchEntities: React.PropTypes.func.isRequired,
-    items: React.PropTypes.arrayOf(React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired,
-        id: React.PropTypes.string.isRequired
-    })),
+    items: entitiesDefinition.isRequired,
     isInProgress: React.PropTypes.bool.isRequired,
     errorMessage: React.PropTypes.string
 };

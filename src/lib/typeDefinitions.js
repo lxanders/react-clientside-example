@@ -1,0 +1,13 @@
+import { PropTypes } from 'react';
+
+const entity = PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+});
+
+const entities = PropTypes.arrayOf(entity);
+
+export {
+    entity,
+    entities
+};
