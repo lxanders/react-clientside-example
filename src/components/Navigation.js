@@ -21,7 +21,7 @@ const Navigation = () => {
                 <IndexLinkContainer to={{ pathname: '/' }}>
                     <NavItem><span>Home</span></NavItem>
                 </IndexLinkContainer>
-                <LinkContainer to={{ pathname: '/about' }} className='foobar'>
+                <LinkContainer to={{ pathname: '/about' }}>
                     <NavItem><span>About</span></NavItem>
                 </LinkContainer>
             </Nav>
