@@ -5,9 +5,11 @@ const entity = PropTypes.shape({
     id: PropTypes.string.isRequired
 });
 
-const entities = PropTypes.arrayOf(entity);
+const entities = PropTypes.object;
+const entitiesList = PropTypes.arrayOf(entity);
 
 export {
     entity,
-    entities
+    entities,
+    entitiesList
 };

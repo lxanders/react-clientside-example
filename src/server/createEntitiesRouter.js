@@ -1,7 +1,6 @@
 import express from 'express';
-import R from 'ramda';
 
-const createEntitiesRouter = (generateId, entities = []) => {
+const createEntitiesRouter = (generateId, entities = {}) => {
     const entitiesRouter = express.Router(); // eslint-disable-line new-cap
 
     const getEntities = (req, res) => {
@@ -10,8 +9,7 @@ const createEntitiesRouter = (generateId, entities = []) => {
     };
 
     const getEntity = (req, res) => {
-        const { id } = req.params;
-        const entity = R.find(R.propEq('id', id))(entities);
+        const entity = entities[req.params.id];
 
         if (entity) {
             res.status(200)
@@ -28,7 +26,8 @@ const createEntitiesRouter = (generateId, entities = []) => {
             ...req.body
         };
 
-        entities.push(createdEntity);
+        // eslint-disable-next-line no-param-reassign
+        entities[createdEntity.id] = createdEntity;
 
         res.status(201)
         .location(`/${createdEntity.id}`)
@@ -37,15 +36,14 @@ const createEntitiesRouter = (generateId, entities = []) => {
 
     const updateEntity = (req, res) => {
         const { id } = req.params;
-        let entity = R.find(R.propEq('id', id))(entities);
-        const updatedEntity = R.merge(entity, req.body);
+        let entity = entities[id];
 
         if (entity) {
-            entity = updatedEntity;
+            entity = req.body;
 
             res.status(200)
-            .location(`/${updatedEntity.id}`)
-            .json(updatedEntity);
+            .location(`/${id}`)
+            .json(entity);
         } else {
             res.status(400)
             .end();

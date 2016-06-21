@@ -1,11 +1,10 @@
 import { combineReducers } from 'redux';
-import R from 'ramda';
 import * as types from '../actions/types';
 
-const items = (state = [], action) => {
+const items = (state = {}, action) => {
     const handlers = {
-        [types.ADD_ENTITY_SUCCESS]: () => [ ...state, action.entity ],
-        [types.FETCH_ENTITIES_SUCCESS]: () => [ ...state, ...action.items ]
+        [types.ADD_ENTITY_SUCCESS]: () => ({ ...state, [action.entity.id]: action.entity }),
+        [types.FETCH_ENTITIES_SUCCESS]: () => ({ ...state, ...action.items })
     };
 
     const handleAction = handlers[action.type];
@@ -16,7 +15,7 @@ const items = (state = [], action) => {
 const ids = (state = [], action) => {
     const handlers = {
         [types.ADD_ENTITY_SUCCESS]: () => [ ...state, action.entity.id ],
-        [types.FETCH_ENTITIES_SUCCESS]: () => [ ...state, ...R.map((entity) => entity.id, action.items) ]
+        [types.FETCH_ENTITIES_SUCCESS]: () => [ ...state, ...Object.keys(action.items) ]
     };
 
     const handleAction = handlers[action.type];

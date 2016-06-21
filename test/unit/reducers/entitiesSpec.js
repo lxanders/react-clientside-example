@@ -5,7 +5,7 @@ import entities from '../../../src/reducers/entities';
 describe('entities reducer', function () {
     it('should create the initial state', function () {
         const expectedState = {
-            items: [],
+            items: {},
             ids: [],
             isInProgress: false,
             errorMessage: null
@@ -14,7 +14,7 @@ describe('entities reducer', function () {
         expect(entities(undefined, {})).to.deep.equal(expectedState);
     });
 
-    const createInitialItems = () => [ { name: 'anyEntity' } ];
+    const createInitialItems = () => ({ fooId: { id: 'fooId', name: 'anyEntity' } });
 
     it('should set the corresponding flag on ADD_ENTITY_REQUEST', function () {
         const action = { type: types.ADD_ENTITY_REQUEST };
@@ -48,7 +48,7 @@ describe('entities reducer', function () {
         };
 
         const expectedState = {
-            items: [ ...createInitialItems(), newEntity ],
+            items: { ...createInitialItems(), [newEntity.id]: newEntity },
             ids: [ newEntity.id ],
             isInProgress: false,
             errorMessage: null
@@ -101,7 +101,7 @@ describe('entities reducer', function () {
     it('should add new entities on FETCH_TODOS_SUCCESS', function () {
         const entity1 = { name: 'newEntity1', id: '123' };
         const entity2 = { name: 'newEntity2', id: '987' };
-        const fetchedEntities = [ entity1, entity2 ];
+        const fetchedEntities = { [entity1.id]: entity1, [entity2.id]: entity2 };
         const action = { type: types.FETCH_ENTITIES_SUCCESS, items: fetchedEntities };
 
         const state = {
@@ -112,7 +112,7 @@ describe('entities reducer', function () {
         };
 
         const expectedState = {
-            items: [ ...createInitialItems(), ...fetchedEntities ],
+            items: { ...createInitialItems(), ...fetchedEntities },
             ids: [ entity1.id, entity2.id ],
             isInProgress: false,
             errorMessage: null

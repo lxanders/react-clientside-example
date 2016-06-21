@@ -1,4 +1,5 @@
 import React from 'react';
+import R from 'ramda';
 import { connect } from 'react-redux';
 import EntityList from '../components/EntityList';
 import { fetchEntities } from '../actions/index';
@@ -11,7 +12,9 @@ class AllEntitiesList extends React.Component {
     }
 
     render() {
-        return <EntityList entities={this.props.items} />;
+        const entitiesList = R.values(this.props.items);
+
+        return <EntityList entities={entitiesList} />;
     }
 }
 
