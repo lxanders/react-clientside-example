@@ -78,6 +78,68 @@ describe('entities reducer', function () {
         expect(entities(state, action)).to.deep.equal(expectedState);
     });
 
+    it('should set the corresponding flag on FETCH_ENTITY_REQUEST', function () {
+        const action = { type: types.FETCH_ENTITY_REQUEST };
+
+        const state = {
+            items: createInitialItems(),
+            ids: [],
+            isInProgress: false,
+            errorMessage: 'any prior error message'
+        };
+
+        const expectedState = {
+            items: createInitialItems(),
+            ids: [],
+            isInProgress: true,
+            errorMessage: null
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
+    it('should add the received entity on FETCH_ENTITY_SUCCESS', function () {
+        const entity = { name: 'anyEntity', id: 'foo' };
+        const action = { type: types.FETCH_ENTITY_SUCCESS, entity };
+
+        const state = {
+            items: createInitialItems(),
+            ids: [],
+            isInProgress: true,
+            errorMessage: 'any prior error message'
+        };
+
+        const expectedState = {
+            items: { ...createInitialItems(), [entity.id]: entity },
+            ids: [ entity.id ],
+            isInProgress: false,
+            errorMessage: null
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
+    it('should save an error message for FETCH_ENTITY_FAILURE', function () {
+        const newErrorMessage = 'new error message';
+        const action = { type: types.FETCH_ENTITY_FAILURE, errorMessage: newErrorMessage };
+
+        const state = {
+            items: createInitialItems(),
+            ids: [],
+            isInProgress: true,
+            errorMessage: null
+        };
+
+        const expectedState = {
+            items: createInitialItems(),
+            ids: [],
+            isInProgress: false,
+            errorMessage: newErrorMessage
+        };
+
+        expect(entities(state, action)).to.deep.equal(expectedState);
+    });
+
     it('should set the corresponding flag on FETCH_ENTITIES_REQUEST', function () {
         const action = { type: types.FETCH_ENTITIES_REQUEST };
 

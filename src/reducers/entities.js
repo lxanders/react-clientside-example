@@ -2,9 +2,13 @@ import { combineReducers } from 'redux';
 import * as types from '../actions/types';
 
 const items = (state = {}, action) => {
+    const addItem = () => ({ ...state, [action.entity.id]: action.entity });
+    const addItems = () => ({ ...state, ...action.items });
+
     const handlers = {
-        [types.ADD_ENTITY_SUCCESS]: () => ({ ...state, [action.entity.id]: action.entity }),
-        [types.FETCH_ENTITIES_SUCCESS]: () => ({ ...state, ...action.items })
+        [types.ADD_ENTITY_SUCCESS]: addItem,
+        [types.FETCH_ENTITY_SUCCESS]: addItem,
+        [types.FETCH_ENTITIES_SUCCESS]: addItems
     };
 
     const handleAction = handlers[action.type];
@@ -13,9 +17,13 @@ const items = (state = {}, action) => {
 };
 
 const ids = (state = [], action) => {
+    const addId = () => [ ...state, action.entity.id ];
+    const addIds = () => [ ...state, ...Object.keys(action.items) ];
+
     const handlers = {
-        [types.ADD_ENTITY_SUCCESS]: () => [ ...state, action.entity.id ],
-        [types.FETCH_ENTITIES_SUCCESS]: () => [ ...state, ...Object.keys(action.items) ]
+        [types.ADD_ENTITY_SUCCESS]: addId,
+        [types.FETCH_ENTITY_SUCCESS]: addId,
+        [types.FETCH_ENTITIES_SUCCESS]: addIds
     };
 
     const handleAction = handlers[action.type];
@@ -24,16 +32,19 @@ const ids = (state = [], action) => {
 };
 
 const isInProgress = (state = false, action) => {
-    const inProgress = () => true;
-    const notInProgress = () => false;
+    const setInProgress = () => true;
+    const resetInProgress = () => false;
 
     const handlers = {
-        [types.ADD_ENTITY_REQUEST]: inProgress,
-        [types.ADD_ENTITY_SUCCESS]: notInProgress,
-        [types.ADD_ENTITY_FAILURE]: notInProgress,
-        [types.FETCH_ENTITIES_REQUEST]: inProgress,
-        [types.FETCH_ENTITIES_SUCCESS]: notInProgress,
-        [types.FETCH_ENTITIES_FAILURE]: notInProgress
+        [types.ADD_ENTITY_REQUEST]: setInProgress,
+        [types.ADD_ENTITY_SUCCESS]: resetInProgress,
+        [types.ADD_ENTITY_FAILURE]: resetInProgress,
+        [types.FETCH_ENTITY_REQUEST]: setInProgress,
+        [types.FETCH_ENTITY_SUCCESS]: resetInProgress,
+        [types.FETCH_ENTITY_FAILURE]: resetInProgress,
+        [types.FETCH_ENTITIES_REQUEST]: setInProgress,
+        [types.FETCH_ENTITIES_SUCCESS]: resetInProgress,
+        [types.FETCH_ENTITIES_FAILURE]: resetInProgress
     };
 
     const handleAction = handlers[action.type];
@@ -42,16 +53,19 @@ const isInProgress = (state = false, action) => {
 };
 
 const errorMessage = (state = null, action) => {
-    const handleError = () => action.errorMessage;
-    const noError = () => null;
+    const setError = () => action.errorMessage;
+    const resetError = () => null;
 
     const handlers = {
-        [types.ADD_ENTITY_REQUEST]: noError,
-        [types.ADD_ENTITY_SUCCESS]: noError,
-        [types.ADD_ENTITY_FAILURE]: handleError,
-        [types.FETCH_ENTITIES_REQUEST]: noError,
-        [types.FETCH_ENTITIES_SUCCESS]: noError,
-        [types.FETCH_ENTITIES_FAILURE]: handleError
+        [types.ADD_ENTITY_REQUEST]: resetError,
+        [types.ADD_ENTITY_SUCCESS]: resetError,
+        [types.ADD_ENTITY_FAILURE]: setError,
+        [types.FETCH_ENTITY_REQUEST]: resetError,
+        [types.FETCH_ENTITY_SUCCESS]: resetError,
+        [types.FETCH_ENTITY_FAILURE]: setError,
+        [types.FETCH_ENTITIES_REQUEST]: resetError,
+        [types.FETCH_ENTITIES_SUCCESS]: resetError,
+        [types.FETCH_ENTITIES_FAILURE]: setError
     };
 
     const handleAction = handlers[action.type];
