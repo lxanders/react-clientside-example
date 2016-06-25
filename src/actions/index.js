@@ -10,6 +10,16 @@ const storeEntity = (entityToStore) => {
     };
 };
 
+const fetchEntity = (id) => {
+    return (dispatch, getState, services) => {
+        dispatch({ type: types.FETCH_ENTITY_REQUEST });
+
+        return services.fetchEntity(id)
+        .then((entity) => dispatch({ type: types.FETCH_ENTITY_SUCCESS, entity }))
+        .catch((error) => dispatch({ type: types.FETCH_ENTITY_FAILURE, errorMessage: error.message }));
+    };
+};
+
 const fetchEntities = () => {
     return (dispatch, getState, services) => {
         dispatch({ type: types.FETCH_ENTITIES_REQUEST });
@@ -22,5 +32,6 @@ const fetchEntities = () => {
 
 export {
     storeEntity,
+    fetchEntity,
     fetchEntities
 };

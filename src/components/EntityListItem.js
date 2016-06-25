@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import { entity as entityDefinition } from '../lib/typeDefinitions';
 
 const createEntityDetailsUri = (id) => {
     return `/entities/${id}`;
@@ -10,10 +11,7 @@ const EntityListItem = ({ entity }) => {
 };
 
 EntityListItem.propTypes = {
-    entity: React.PropTypes.shape({
-        name: React.PropTypes.string.isRequired,
-        id: React.PropTypes.string.isRequired
-    }).isRequired
+    entity: entityDefinition.isRequired
 };
 
 export default EntityListItem;

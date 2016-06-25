@@ -3,13 +3,13 @@ import nock from 'nock';
 import sinon from 'sinon';
 import createServices from '../../../src/services/index';
 
-describe('services', function () {
-    beforeEach(function () {
+describe('services', () => {
+    beforeEach(() => {
         nock.cleanAll();
     });
 
-    describe('createServices', function () {
-        it('should use the provided fetcher modul instead of the default if one was provided', function () {
+    describe('createServices', () => {
+        it('should use the provided fetcher modul instead of the default if one was provided', () => {
             const fetchModule = sinon.stub().returns(Promise.resolve());
             const { fetchEntities } = createServices(fetchModule);
 
@@ -19,8 +19,8 @@ describe('services', function () {
         });
     });
 
-    describe('storeEntity', function () {
-        it('should return the stored entity if successful', function () {
+    describe('storeEntity', () => {
+        it('should return the stored entity if successful', () => {
             const entity = { name: 'foo' };
             const { storeEntity } = createServices();
 
@@ -28,30 +28,58 @@ describe('services', function () {
             .post('/api/entities')
             .reply(200, entity);
 
-            return storeEntity(entity.name)
+            return storeEntity(entity)
             .then((result) => {
                 expect(result).to.deep.equal(entity);
                 scope.done();
             });
         });
 
-        it('should return rejected if the request did not return successfully', function () {
+        it('should return rejected if the request did not return successfully', () => {
             const { storeEntity } = createServices();
 
             const scope = nock('http://localhost:3000')
             .post('/api/entities')
             .reply(500);
 
-            return storeEntity('anything')
-            .catch((result) => {
-                expect(result).to.deep.equal(new Error('500: Internal Server Error'));
+            return expect(storeEntity()).to.be.rejectedWith('500: Internal Server Error')
+            .then(() => {
                 scope.done();
             });
         });
     });
 
-    describe('fetchEntities', function () {
-        it('should return the entities if the request was successful', function () {
+    describe('fetchEntity', () => {
+        it('should return the entity if the request was successful', () => {
+            const { fetchEntity } = createServices();
+            const entity = { name: 'entity1', id: '123' };
+
+            const scope = nock('http://localhost:3000')
+            .get('/api/entities/123')
+            .reply(200, entity);
+
+            return expect(fetchEntity(entity.id)).to.become(entity)
+            .then(() => {
+                scope.done();
+            });
+        });
+
+        it('should return rejected if the request did not return successful', () => {
+            const { fetchEntity } = createServices();
+
+            const scope = nock('http://localhost:3000')
+            .get('/api/entities/123')
+            .reply(404);
+
+            return expect(fetchEntity('123')).to.be.rejectedWith('404: Not Found')
+            .then(() => {
+                scope.done();
+            });
+        });
+    });
+
+    describe('fetchEntities', () => {
+        it('should return the entities if the request was successful', () => {
             const { fetchEntities } = createServices();
             const entities = [ { name: 'entity1' }, { name: 'entity2' } ];
 
@@ -65,7 +93,7 @@ describe('services', function () {
             });
         });
 
-        it('should return rejected if the request did not return successfully', function () {
+        it('should return rejected if the request did not return successfully', () => {
             const { fetchEntities } = createServices();
 
             const scope = nock('http://localhost:3000')

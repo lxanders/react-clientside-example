@@ -5,6 +5,10 @@ import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
 const Navigation = () => {
     const githubLink = 'https://github.com/lxanders/react-clientside-example';
+    const queryParameters = {
+        any: 'query parameters',
+        areDisplayed: true
+    };
 
     return (
         <Navbar className='navigation'>
@@ -21,8 +25,8 @@ const Navigation = () => {
                 <IndexLinkContainer to={{ pathname: '/' }}>
                     <NavItem><span>Home</span></NavItem>
                 </IndexLinkContainer>
-                <LinkContainer to={{ pathname: '/about' }} className='foobar'>
-                    <NavItem><span>About</span></NavItem>
+                <LinkContainer to={{ pathname: '/queryParamsDemo', query: queryParameters }}>
+                    <NavItem><span>QueryParamsDemo</span></NavItem>
                 </LinkContainer>
             </Nav>
 

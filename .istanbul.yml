@@ -2,13 +2,8 @@ instrumentation:
   root: src
   default-excludes: true
   excludes:
-    - 'app.js'
-    - 'configureStore.js'
     - 'assets/**'
     - 'build/**'
-    - 'reducers/index.js'
-    - 'server/index.js'
-    - 'webpack.config.js'
   embed-source: false
   complete-copy: false
   include-all-sources: true
@@ -18,14 +13,14 @@ reporting:
     - lcov
   dir: ./build/coverage
   watermarks:
-    statements: [99, 100]
-    lines: [99, 100]
-    functions: [99, 100]
-    branches: [99, 100]
+    statements: [80, 100]
+    lines: [80, 100]
+    functions: [80, 100]
+    branches: [80, 100]
 check:
   global:
-    statements: 100
-    lines: 100
-    branches: 100
-    functions: 100
+    statements: 80
+    lines: 80
+    branches: 80
+    functions: 80
     excludes: []

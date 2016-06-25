@@ -4,12 +4,12 @@ import { expect } from 'chai';
 import { Link } from 'react-router';
 import EntityListItem from '../../../src/components/EntityListItem';
 
-describe('EntityListItem', function () {
+describe('EntityListItem', () => {
     const createComponent = (entity) => {
         return <EntityListItem entity={entity} />;
     };
 
-    it('should use the entity id for the link creation', function () {
+    it('should use the entity id for the link creation', () => {
         const entity = { name: 'anyName', id: 'abcd' };
         const entityListItem = shallow(createComponent(entity));
         const link = entityListItem.find(Link);

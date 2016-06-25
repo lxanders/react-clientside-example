@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import createServer from '../../../src/server/createServer';
 
-describe('createServer', function () {
-    it('should register the entities api on the provided base uri', function () {
+describe('createServer', () => {
+    it('should register the entities api on the provided base uri', () => {
         const server = { use: sinon.spy() };
         const apiPath = '/any-path';
         const expectedRoutePath = `${apiPath}/entities`;
