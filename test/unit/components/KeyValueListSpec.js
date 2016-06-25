@@ -3,26 +3,26 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import KeyValueList from '../../../src/components/KeyValueList';
 
-describe('KeyValueList', function () {
+describe('KeyValueList', () => {
     const createComponent = (object) => {
         return <KeyValueList object={object} />;
     };
 
-    it('should return a list if the object to list had content', function () {
+    it('should return a list if the object to list had content', () => {
         const keyValueList = shallow(createComponent({ any: 'thing' }));
         const list = keyValueList.find('ul');
 
         expect(list.length).to.equal(1);
     });
 
-    it('should not return a list if the object to list was empty', function () {
+    it('should not return a list if the object to list was empty', () => {
         const keyValueList = shallow(createComponent({}));
         const list = keyValueList.find('ul');
 
         expect(list.length).to.equal(0);
     });
 
-    it('should render all passed in objects as a formatted list item with the key and the value', function () {
+    it('should render all passed in objects as a formatted list item with the key and the value', () => {
         const objectToList = { foo: 'bar', baz: 123 };
         const keyValueList = shallow(createComponent(objectToList));
         const listItems = keyValueList.find('li');

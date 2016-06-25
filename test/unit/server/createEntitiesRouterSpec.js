@@ -3,14 +3,14 @@ import { expect } from 'chai';
 import express from 'express';
 import createServer from '../../../src/server/createServer';
 
-describe('createEntitiesRouter', function () {
+describe('createEntitiesRouter', () => {
     const prepareServer = (entities = {}, generateId) => {
         const apiBasePath = '';
 
         return createServer(express(), apiBasePath, { entities }, generateId);
     };
 
-    it('should respond with 200 and all entities for GET /entities if successful', function () {
+    it('should respond with 200 and all entities for GET /entities if successful', () => {
         const entity1 = { name: 'any', id: '10' };
         const entity2 = { name: 'other', id: '20' };
         const entities = { [entity1.id]: entity1, [entity2.id]: entity2 };
@@ -24,7 +24,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should respond with 200 and the selected entity for GET /entities/:id if successful', function () {
+    it('should respond with 200 and the selected entity for GET /entities/:id if successful', () => {
         const entityId = '10';
         const entity = { name: 'anyEntity', id: entityId };
         const server = prepareServer({ [entity.id]: entity });
@@ -37,7 +37,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should respond with 404 for GET /entities/:id for a non-existing entity', function () {
+    it('should respond with 404 for GET /entities/:id for a non-existing entity', () => {
         const emptyEntities = {};
         const server = prepareServer(emptyEntities);
 
@@ -46,7 +46,7 @@ describe('createEntitiesRouter', function () {
             .expect(404);
     });
 
-    it('should respond with 201 and the created entity for POST /entities if successful', function () {
+    it('should respond with 201 and the created entity for POST /entities if successful', () => {
         const id = '123';
         const generateId = () => id;
         const entityPayload = { name: 'prior-non-existing-entity' };
@@ -63,7 +63,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should respond with 200 and the updated entity for PUT /entities/:id if successful', function () {
+    it('should respond with 200 and the updated entity for PUT /entities/:id if successful', () => {
         const entity = { id: '123', name: 'oldName' };
         const updatedEntity = { id: entity.id, name: 'newName' };
         const server = prepareServer({ [entity.id]: entity });
@@ -78,7 +78,7 @@ describe('createEntitiesRouter', function () {
             });
     });
 
-    it('should respond with 400 for PUT /entities/:id if no entity with the specified id existed', function () {
+    it('should respond with 400 for PUT /entities/:id if no entity with the specified id existed', () => {
         const emptyEntities = [];
         const server = prepareServer(emptyEntities);
 

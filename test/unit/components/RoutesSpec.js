@@ -8,7 +8,7 @@ import reducers from '../../../src/reducers/index';
 import App from '../../../src/components/App';
 import Routes from '../../../src/components/Routes';
 
-describe('Routes', function () {
+describe('Routes', () => {
     const createComponent = () => {
         const services = { fetchEntities: () => Promise.resolve([]) };
         const store = createStore(
@@ -23,7 +23,7 @@ describe('Routes', function () {
         );
     };
 
-    it('should render the app component on the default route', function () {
+    it('should render the app component on the default route', () => {
         const routes = mount(createComponent());
 
         expect(routes.find(App).length).to.equal(1);

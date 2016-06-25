@@ -9,7 +9,7 @@ import { Form, FormControl } from 'react-bootstrap';
 import { AddEntity } from '../../../src/containers/AddEntity';
 import reducers from '../../../src/reducers/index';
 
-describe('AddEntity', function () {
+describe('AddEntity', () => {
     const createComponent = (services, dispatch = sinon.spy()) => {
         const store = createStore(
             reducers,
@@ -23,7 +23,7 @@ describe('AddEntity', function () {
         );
     };
 
-    it('should dispatch an action to add an entity on clicking', function () {
+    it('should dispatch an action to add an entity on clicking', () => {
         const entityName = 'foo';
         const services = { storeEntity: () => Promise.resolve({ name: entityName }) };
         const dispatch = sinon.spy();
@@ -36,7 +36,7 @@ describe('AddEntity', function () {
         expect(dispatch).to.have.been.calledWith(sinon.match.func);
     });
 
-    it('should not dispatch an action on clicking with an empty name', function () {
+    it('should not dispatch an action on clicking with an empty name', () => {
         const services = { storeEntity: () => Promise.resolve({ name: '' }) };
         const dispatch = sinon.spy();
         const addEntity = mount(createComponent(services, dispatch));
@@ -46,7 +46,7 @@ describe('AddEntity', function () {
         expect(dispatch).to.not.have.been.called;
     });
 
-    it('should clear the input after submitting', function () {
+    it('should clear the input after submitting', () => {
         const services = { storeEntity: () => Promise.resolve({ name: '' }) };
         const dispatch = sinon.spy();
         const addEntity = mount(createComponent(services, dispatch));

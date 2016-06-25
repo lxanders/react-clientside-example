@@ -4,12 +4,12 @@ import { expect } from 'chai';
 import KeyValueList from '../../../src/components/KeyValueList';
 import QueryParamsDemo from '../../../src/components/QueryParamsDemo';
 
-describe('QueryParamsDemo', function () {
+describe('QueryParamsDemo', () => {
     const createComponent = (location) => {
         return <QueryParamsDemo location={location} />;
     };
 
-    it('should render the provided query parameters', function () {
+    it('should render the provided query parameters', () => {
         const queryParameters = {
             some: 'foo',
             bar: true

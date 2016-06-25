@@ -6,8 +6,8 @@ import { expect } from 'chai';
 import { PageHeader } from 'react-bootstrap';
 import { EntityDetails } from '../../../src/containers/EntityDetails';
 
-describe('EntityDetails', function () {
-    describe('not connected', function () {
+describe('EntityDetails', () => {
+    describe('not connected', () => {
         const createDefaultProps = () => ({
             fetchEntity: sinon.spy(),
             isInProgress: false,
@@ -22,7 +22,7 @@ describe('EntityDetails', function () {
             return <EntityDetails {...mergedProps} />;
         };
 
-        it('should execute the corresponding data fetching for the provided entity id', function () {
+        it('should execute the corresponding data fetching for the provided entity id', () => {
             const fetchEntity = sinon.spy();
             const entityId = '123-abc';
 
@@ -32,7 +32,7 @@ describe('EntityDetails', function () {
             expect(fetchEntity).to.have.been.calledWithExactly(entityId);
         });
 
-        it('should render the provided entity id regardless of the fetching result for this id', function () {
+        it('should render the provided entity id regardless of the fetching result for this id', () => {
             const id = '123-a';
             const entityDetails = shallow(createComponent({ id }));
             const pageHeaderChildren = entityDetails.find(PageHeader).prop('children');
@@ -40,7 +40,7 @@ describe('EntityDetails', function () {
             expect(pageHeaderChildren).to.deep.equal([ 'Entity details: ', id ]);
         });
 
-        it('should render the entity details', function () {
+        it('should render the entity details', () => {
             const entity = { id: 'asd-123', name: 'any entity name' };
             const entityDetails = shallow(createComponent({ entity }));
             const listItems = entityDetails.find('li');
@@ -50,7 +50,7 @@ describe('EntityDetails', function () {
             expect(listItems.last().text()).to.equal(`name: ${entity.name}`);
         });
 
-        it('should render the provided error message', function () {
+        it('should render the provided error message', () => {
             const errorMessage = 'any error message';
             const expectedError = `No entity found with this key. Message: ${errorMessage}`;
             const entityDetails = shallow(createComponent({ errorMessage }));
@@ -58,7 +58,7 @@ describe('EntityDetails', function () {
             expect(entityDetails.find('.error').text()).to.equal(expectedError);
         });
 
-        it('should render a loading indicator', function () {
+        it('should render a loading indicator', () => {
             const entityDetails = shallow(createComponent({ isInProgress: true }));
 
             expect(entityDetails.find('.loading').text()).to.equal('Loading...');
