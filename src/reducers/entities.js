@@ -73,6 +73,7 @@ const errorMessage = (state = null, action) => {
     return handleAction ? handleAction() : state;
 };
 
+export const getItem = (state, id) => state.items[id];
 export const getItems = (state) => state.items;
 export const getIsInProgress = (state) => state.isInProgress;
 export const getErrorMessage = (state) => state.errorMessage;

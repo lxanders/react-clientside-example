@@ -7,7 +7,8 @@ const reducers = combineReducers({
     routing: routerReducer
 });
 
-export const getEntitiesItems = (state) => fromEntities.getItems(state.entities);
+export const getEntity = (state, id) => fromEntities.getItem(state.entities, id);
+export const getEntities = (state) => fromEntities.getItems(state.entities);
 export const getEntitiesIsInProgress = (state) => fromEntities.getIsInProgress(state.entities);
 export const getEntitiesErrorMessage = (state) => fromEntities.getErrorMessage(state.entities);
 

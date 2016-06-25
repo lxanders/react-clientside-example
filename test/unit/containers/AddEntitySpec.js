@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Form, FormControl } from 'react-bootstrap';
 import { AddEntity } from '../../../src/containers/AddEntity';
 import reducers from '../../../src/reducers/index';
-import thunk from 'redux-thunk';
 
 describe('AddEntity', function () {
     const createComponent = (services, dispatch = sinon.spy()) => {

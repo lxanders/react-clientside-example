@@ -3,7 +3,7 @@ import R from 'ramda';
 import { connect } from 'react-redux';
 import EntityList from '../components/EntityList';
 import { fetchEntities } from '../actions/index';
-import { getEntitiesItems, getEntitiesIsInProgress, getEntitiesErrorMessage } from '../reducers/index';
+import { getEntities, getEntitiesIsInProgress, getEntitiesErrorMessage } from '../reducers/index';
 import { entities as entitiesDefinition } from '../lib/typeDefinitions';
 
 class AllEntitiesList extends React.Component {
@@ -26,7 +26,7 @@ AllEntitiesList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    items: getEntitiesItems(state),
+    items: getEntities(state),
     isInProgress: getEntitiesIsInProgress(state),
     errorMessage: getEntitiesErrorMessage(state)
 });

@@ -4,7 +4,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import App from './App';
 import Home from './Home';
 import QueryParamsDemo from './QueryParamsDemo';
-import EntityDetails from './EntityDetails';
+import EntityDetails from '../containers/EntityDetails';
 import NotFound from './NotFound';
 
 const Routes = (props, { store }) => {
