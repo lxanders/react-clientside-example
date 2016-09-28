@@ -9,6 +9,8 @@ This is an example for client side rendered React and Redux.
 
 The project is kept quite small by intent to not confuse with unnecessary complexity.
 
+***Note***: There is now the very actively maintained [create-react-app](https://github.com/facebookincubator/create-react-app) which tries to give developers the possibility to not get involved much with configuration. It is still a good idea to know something about the build stack and configuration of your projects so it is still worthwile to have a look at this or other example-projects to get some insights how to configure a web project in terms of bundling, transpiling, etc. Knowing more in these areas will give you a better base for decisions regarding your stack and configuration as well as helps you debugging.
+
 Some of the key technologies used are:
 
 * Building / bundling: [webpack](https://github.com/webpack/webpack)
