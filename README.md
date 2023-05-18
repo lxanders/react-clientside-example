@@ -3,7 +3,7 @@
 
 -----
 
-# react-clientside-example
+# Deprecated: react-clientside-example
 
 This is an example for client side rendered React and Redux.
 
